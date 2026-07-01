@@ -1,135 +1,130 @@
 import { LitElement, css, html } from 'lit';
-import { property, customElement } from 'lit/decorators.js';
-import { resolveRouterPath } from '../router';
-
-import '@shoelace-style/shoelace/dist/components/card/card.js';
-import '@shoelace-style/shoelace/dist/components/button/button.js';
-
-import { styles } from '../styles/shared-styles';
+import { customElement } from 'lit/decorators.js';
 
 @customElement('app-home')
 export class AppHome extends LitElement {
-
-  // For more information on using properties and state in lit
-  // check out this link https://lit.dev/docs/components/properties/
-  @property() message = 'Welcome!';
-
-  static styles = [
-    styles,
-    css`
-    #welcomeBar {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+  static styles = css`
+    :host {
+      display: block;
+      background: #000;
     }
 
-    #welcomeCard,
-    #infoCard {
-      padding: 18px;
-      padding-top: 0px;
+.page {
+  margin: 0;
+  padding: 0;
+  background: #000;
+
+  height: 100vh;
+  overflow-y: auto;
+
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.hero-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+    .sticky-title {
+      position: absolute;
+      top: 42%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 46px;
+      font-weight: 900;
+      color: white;
+      white-space: nowrap;
+      z-index: 3;
     }
 
-    sl-card::part(footer) {
-      display: flex;
-      justify-content: flex-end;
+    .sticky-title .gold {
+      color: #d7a83f;
     }
 
-    @media(min-width: 750px) {
-      sl-card {
-        width: 70vw;
+    .menu-button {
+      position: fixed;
+      top: 24px;
+      right: 20px;
+      z-index: 50;
+      background: transparent;
+      border: 0;
+      color: #d7a83f;
+      font-size: 34px;
+    }
+
+section {
+  margin: 0;
+  padding: 0;
+  background: #000;
+
+  height: 100vh;
+
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.full-image {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  object-fit: contain;
+}
+
+    @media (min-width: 820px) {
+      :host {
+        display: flex;
+        justify-content: center;
+        background: #111;
+      }
+
+      .page {
+        width: 430px;
+        overflow: hidden;
+      }
+
+      .menu-button {
+        right: calc(50% - 195px);
       }
     }
-
-
-    @media (horizontal-viewport-segments: 2) {
-      #welcomeBar {
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: space-between;
-      }
-
-      #welcomeCard {
-        margin-right: 64px;
-      }
-    }
-  `];
-
-  async firstUpdated() {
-    // this method is a lifecycle even in lit
-    // for more info check out the lit docs https://lit.dev/docs/components/lifecycle/
-    console.log('This is your home page');
-  }
-
-  share() {
-    if ((navigator as any).share) {
-      (navigator as any).share({
-        title: 'PWABuilder pwa-starter',
-        text: 'Check out the PWABuilder pwa-starter!',
-        url: 'https://github.com/pwa-builder/pwa-starter',
-      });
-    }
-  }
+  `;
 
   render() {
     return html`
-      <app-header></app-header>
+      <main class="page">
+        <section class="hero-section">
+          <img class="hero-image" src="/images/1.png" alt="MJ Rental main" />
 
-      <main>
-        <div id="welcomeBar">
-          <sl-card id="welcomeCard">
-            <div slot="header">
-              <h2>${this.message}</h2>
-            </div>
+          <div class="sticky-title">
+            <span class="gold">MJ</span>
+            <span>RENTAL</span>
+          </div>
 
-            <p>
-              For more information on the PWABuilder pwa-starter, check out the
-              <a href="https://docs.pwabuilder.com/#/starter/quick-start">
-                documentation</a>.
-            </p>
+          <button class="menu-button">☰</button>
+        </section>
 
-            <p id="mainInfo">
-              Welcome to the
-              <a href="https://pwabuilder.com">PWABuilder</a>
-              pwa-starter! Be sure to head back to
-              <a href="https://pwabuilder.com">PWABuilder</a>
-              when you are ready to ship this PWA to the Microsoft Store, Google Play
-              and the Apple App Store!
-            </p>
+        <section>
+          <img class="full-image" src="/images/2.png" alt="MJ Rental service" />
+        </section>
 
-            ${'share' in navigator
-              ? html`<sl-button slot="footer" variant="default" @click="${this.share}">
-                        <sl-icon slot="prefix" name="share"></sl-icon>
-                        Share this Starter!
-                      </sl-button>`
-              : null}
-          </sl-card>
+        <section>
+          <img class="full-image" src="/images/3.png" alt="MJ Rental signature rentcar" />
+        </section>
 
-          <sl-card id="infoCard">
-            <h2>Technology Used</h2>
-
-            <ul>
-              <li>
-                <a href="https://www.typescriptlang.org/">TypeScript</a>
-              </li>
-
-              <li>
-                <a href="https://lit.dev">lit</a>
-              </li>
-
-              <li>
-                <a href="https://shoelace.style/">Shoelace</a>
-              </li>
-
-              <li>
-                <a href="https://github.com/thepassle/app-tools/blob/master/router/README.md"
-                  >App Tools Router</a>
-              </li>
-            </ul>
-          </sl-card>
-
-          <sl-button href="${resolveRouterPath('about')}" variant="primary">Navigate to About</sl-button>
-        </div>
+        <section>
+          <img class="full-image" src="/images/4.png" alt="MJ Rental car list and contact" />
+        </section>
       </main>
     `;
   }

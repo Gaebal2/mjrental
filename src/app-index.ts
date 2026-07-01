@@ -8,13 +8,14 @@ import { router } from './router';
 
 @customElement('app-index')
 export class AppIndex extends LitElement {
-  static styles = css`
-    main {
-      padding-left: 16px;
-      padding-right: 16px;
-      padding-bottom: 16px;
-    }
-  `;
+static styles = css`
+  :host {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: #000;
+  }
+`;
 
   firstUpdated() {
     router.addEventListener('route-changed', () => {
