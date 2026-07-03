@@ -7,7 +7,7 @@ import '@shoelace-style/shoelace/dist/components/button/button.js';
 export class AppHeader extends LitElement {
   @property({ type: String }) title = 'PWA Starter';
 
-  @property({ type: Boolean}) enableBack: boolean = false;
+  @property({ type: Boolean }) enableBack: boolean = false;
 
   static styles = css`
     header {
@@ -45,7 +45,7 @@ export class AppHeader extends LitElement {
       gap: 8px;
     }
 
-    @media(prefers-color-scheme: light) {
+    @media (prefers-color-scheme: light) {
       header {
         color: black;
       }
@@ -59,11 +59,13 @@ export class AppHeader extends LitElement {
   render() {
     return html`
       <header>
-
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <div id="back-button-block">
-          ${this.enableBack ? html`<sl-button size="small" href="${resolveRouterPath()}">
-            Back
-          </sl-button>` : null}
+          ${this.enableBack
+            ? html`<sl-button size="small" href="${resolveRouterPath()}">
+                Back
+              </sl-button>`
+            : null}
 
           <h1>${this.title}</h1>
         </div>
