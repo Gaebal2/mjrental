@@ -484,7 +484,7 @@ export class AppHome extends LitElement {
           <section class="main-img">
             <img
               class="main-img-bg"
-              src="/images/Mainpage_image.JPG"
+              src="./images/Mainpage_image.JPG"
               alt="MJ Rental main"
             />
 
@@ -497,7 +497,7 @@ export class AppHome extends LitElement {
               >
                 <img
                   class="instagram-icon"
-                  src="/icons/250px-Instagram.svg.webp"
+                  src="./icons/250px-Instagram.svg.webp"
                   alt="Instagram"
                 />
               </a>
@@ -510,7 +510,7 @@ export class AppHome extends LitElement {
               >
                 <img
                   class="x-icon"
-                  src="/icons/330px-X_logo_2023.svg.webp"
+                  src="./icons/330px-X_logo_2023.svg.webp"
                   alt="X"
                 />
               </a>
@@ -523,7 +523,7 @@ export class AppHome extends LitElement {
               >
                 <img
                   class="youtube-icon"
-                  src="/icons/330px-YouTube_full-color_icon_(2024).svg.webp"
+                  src="./icons/330px-YouTube_full-color_icon_(2024).svg.webp"
                   alt="Youtube"
                 />
               </a>
@@ -536,44 +536,44 @@ export class AppHome extends LitElement {
             <div class="grid-wrapper">
               <div class="grid">
                 <div class="card">
-                  <img src="/images/grid1_left.JPG" alt="보험대차 전문" />
+                  <img src="./images/grid1_left.JPG" alt="보험대차 전문" />
                 </div>
                 <div class="card">
                   <img
-                    src="/images/grid1_right.JPG"
+                    src="./images/grid1_right.JPG"
                     alt="픽업 딜리버리 서비스"
                   />
                 </div>
                 <div class="card">
-                  <img src="/images/grid2_left.JPG" alt="금연차량 운영" />
+                  <img src="./images/grid2_left.JPG" alt="금연차량 운영" />
                 </div>
                 <div class="card">
                   <img
-                    src="/images/grid2_right.JPG"
+                    src="./images/grid2_right.JPG"
                     alt="수입 국산 대다수 차량 보유"
                   />
                 </div>
                 <div class="card">
                   <img
-                    src="/images/grid3_left.JPG"
+                    src="./images/grid3_left.JPG"
                     alt="전차종 세차시 살균소독"
                   />
                 </div>
                 <div class="card">
-                  <img src="/images/grid3_right.JPG" alt="리스렌트" />
+                  <img src="./images/grid3_right.JPG" alt="리스렌트" />
                 </div>
                 <div class="card">
-                  <img src="/images/grid4_left.JPG" alt="장기렌트" />
+                  <img src="./images/grid4_left.JPG" alt="장기렌트" />
                 </div>
                 <div class="card">
-                  <img src="/images/grid4_right.JPG" alt="단기렌트" />
+                  <img src="./images/grid4_right.JPG" alt="단기렌트" />
                 </div>
               </div>
             </div>
 
             <div class="call" @click=${this.callPhone}>
               <img
-                src="/images/Mainpage_bottom_call.JPG"
+                src="./images/Mainpage_bottom_call.JPG"
                 alt="지금 바로 문의하기"
               />
             </div>
@@ -583,7 +583,7 @@ export class AppHome extends LitElement {
         <section class="screen screen2">
           <img
             class="screen2-bg"
-            src="/images/2-2.PNG"
+            src="./images/2-2.PNG"
             alt="모정렌터카 시그니처 렌트카"
           />
 
@@ -607,11 +607,11 @@ export class AppHome extends LitElement {
         <section class="screen screen3">
           <div class="screen3-page">
             <div class="screen3-img-box-up">
-              <img src="/images/3-1.PNG" alt="해안도로를 향해" />
+              <img src="./images/3-1.PNG" alt="해안도로를 향해" />
             </div>
 
             <div class="screen3-img-box-down">
-              <img src="/images/3-2.PNG" alt="보유 차량 리스트" />
+              <img src="./images/3-2.PNG" alt="보유 차량 리스트" />
             </div>
           </div>
         </section>
@@ -620,7 +620,7 @@ export class AppHome extends LitElement {
           <div class="contact-page">
             <div class="map-box">
               <img
-                src="/images/map_top.PNG"
+                src="./images/map_top.PNG"
                 alt="More than a rental. A refined experience."
               />
             </div>
@@ -631,7 +631,7 @@ export class AppHome extends LitElement {
             </div>
 
             <div class="map-box">
-              <img src="/images/map.PNG" alt="모정렌터카 위치 지도" />
+              <img src="./images/map.PNG" alt="모정렌터카 위치 지도" />
             </div>
 
             <div class="contact-box">
