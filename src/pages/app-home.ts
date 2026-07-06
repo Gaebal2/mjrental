@@ -12,15 +12,16 @@ export class AppHome extends LitElement {
     }
 
     .page {
+      --header-h: 64px;
+      --mainIMGH-h: 260px;
+      --call-h: 56px;
+
       width: 100%;
       height: 100dvh;
-
       overflow-y: auto;
       overflow-x: hidden;
-
       scroll-snap-type: y mandatory;
       scroll-behavior: smooth;
-
       background: #050505;
     }
 
@@ -71,23 +72,167 @@ export class AppHome extends LitElement {
       color: #d7a83f;
     }
 
-    .hero {
-      height: var(--hero-h);
+    .mainIMG {
+      position: relative;
+      height: var(--mainIMGH-h);
       background: #000;
       overflow: hidden;
     }
 
-    .hero-main {
+    .mainIMG-main {
       width: 100%;
       height: 100%;
-      object-fit: fit;
+      object-fit: fill;
       object-position: center top;
       display: block;
       background: #000;
     }
 
+    .social-links {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      display: flex;
+      gap: 12px;
+      z-index: 10;
+      // 소셜아이콘 화면 중앙정렬
+      // left: 50%;
+      // transform: translateX(-50%);
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(215, 168, 63, 0.35);
+      backdrop-filter: blur(10px);
+      transition: 0.25s;
+    }
+
+    .social-links a:active {
+      transform: scale(0.95);
+      background: #d7a83f;
+    }
+
+    .instagram-icon {
+      width: 22px;
+      height: 22px;
+    }
+
+    .x-icon {
+      width: 18px;
+      height: 18px;
+      filter: brightness(0) invert(1);
+    }
+
+    .youtube-icon {
+      width: 24px;
+      height: 16px;
+    }
+
+    .screen2 {
+      height: 100dvh;
+      scroll-snap-align: start;
+      overflow: hidden;
+      background: #283574;
+    }
+
+    .screen2IMG {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #283574;
+    }
+
+    .top-search {
+      position: absolute;
+      top: 24px;
+      right: 18px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 20;
+    }
+
+    .top-search button {
+      background: white;
+      color: #333;
+      border: none;
+      padding: 6px 10px;
+      font-size: 13px;
+    }
+
+    .naver {
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .search-box {
+      width: 100px;
+      padding: 5px 9px;
+      border: 2px solid white;
+      color: white;
+      font-size: 13px;
+    }
+
+    .screen2IMG-text {
+      position: absolute;
+      left: 30px;
+      top: 330px;
+      z-index: 20;
+    }
+
+    .screen2IMG-text h1 {
+      margin: 0;
+      color: #e2be69;
+      font-size: clamp(42px, 13vw, 62px);
+      line-height: 1.08;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    .screen2IMG-line {
+      width: 170px;
+      height: 2px;
+      background: #6e6a7d;
+      margin: 34px 0;
+    }
+
+    .screen2IMG-text h2 {
+      margin: 0;
+      color: white;
+      font-size: clamp(34px, 9vw, 46px);
+      font-weight: 900;
+    }
+
+    .top-search button {
+      background: white;
+      color: #333;
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+
+    .screen2IMG-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center bottom;
+      z-index: 1;
+    }
+
     .service {
-      height: calc(100dvh - var(--header-h) - var(--hero-h));
+      height: calc(100dvh - var(--header-h) - var(--mainIMGH-h));
       padding: clamp(8px, 1.4dvh, 14px) 12px clamp(8px, 1.2dvh, 12px);
       background: linear-gradient(180deg, #080808, #030303);
       box-sizing: border-box;
@@ -164,10 +309,72 @@ export class AppHome extends LitElement {
       background: #000;
     }
 
+    .contact-screen {
+      background: #2f302d;
+    }
+
+    .contact-page {
+      width: 100%;
+      height: 100%;
+      padding: 24px 18px;
+      box-sizing: border-box;
+      background: #2f302d;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 22px;
+    }
+
+    .contact-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .contact-title span {
+      width: 6px;
+      height: 28px;
+      background: #d7a83f;
+      border-radius: 999px;
+    }
+
+    .map-box {
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #444;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .map-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .contact-call {
+      display: block;
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      text-decoration: none;
+    }
+
+    .contact-call img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
     @media (max-height: 720px) {
       .page {
         --header-h: 56px;
-        --hero-h: 220px;
+        --mainIMGH-h: 220px;
         --call-h: 48px;
       }
 
@@ -191,6 +398,14 @@ export class AppHome extends LitElement {
 
       .grid {
         gap: 6px 8px;
+      }
+      .contact-page {
+        padding: 18px 14px;
+        gap: 14px;
+      }
+
+      .contact-title {
+        font-size: 22px;
       }
     }
 
@@ -216,12 +431,52 @@ export class AppHome extends LitElement {
             <div class="header-title"><span>모정</span> 렌터카</div>
           </header>
 
-          <section class="hero">
+          <section class="mainIMG">
             <img
-              class="hero-main"
+              class="mainIMG-main"
               src="/images/Mainpage_image.JPG"
               alt="MJ Rental main"
             />
+            <div class="social-links">
+              <a
+                href="https://instagram.com/yourid"
+                target="_blank"
+                rel="noopener"
+                aria-label="Instagram"
+              >
+                <img
+                  class="instagram-icon"
+                  src="/icons/250px-Instagram.svg.webp"
+                  alt="Instagram"
+                />
+              </a>
+
+              <a
+                href="https://x.com/clazyman"
+                target="_blank"
+                rel="noopener"
+                aria-label="X"
+              >
+                <img
+                  class="x-icon"
+                  src="/icons/330px-X_logo_2023.svg.webp"
+                  alt="X"
+                />
+              </a>
+
+              <a
+                href="https://youtube.com/@clazyman"
+                target="_blank"
+                rel="noopener"
+                aria-label="Youtube"
+              >
+                <img
+                  class="youtube-icon"
+                  src="/icons/330px-YouTube_full-color_icon_(2024).svg.webp"
+                  alt="Youtube"
+                />
+              </a>
+            </div>
           </section>
 
           <section class="service">
@@ -276,18 +531,53 @@ export class AppHome extends LitElement {
             </div>
           </section>
         </section>
-        <section class="screen">
-          <img class="full-page" src="/images/2.png" />
+
+        <section class="screen2">
+          <div class="screen2IMG">
+            <div class="top-search">
+              <span class="naver">NAVER</span>
+              <div class="search-box">▶ 모정렌터카</div>
+              <button>검색</button>
+            </div>
+            <div class="screen2IMG-text">
+              <h1>
+                MOJEONG<br />
+                SIGNATURE<br />
+                RENTCAR
+              </h1>
+              <div class="screen2IMG-line"></div>
+              <h2>모정렌터카</h2>
+            </div>
+            <img class="screen2IMG-bg" src="/images/2-2.PNG" />
+          </div>
         </section>
 
         <section class="screen">
           <img class="full-page" src="/images/3.png" />
         </section>
 
-        <section class="screen">
-          <img class="full-page" src="/images/4.png" />
+        <section class="screen contact-screen">
+          <div class="contact-page">
+
+            <div class="map-box">
+              <img src="/images/map_top.PNG" alt="More than a rental. A refined experience." />
+            </div>
+            <div class="contact-title">
+              <span></span>
+              찾아오시는 길
+            </div>
+
+            <div class="map-box">
+              <img src="/images/map.PNG" alt="모정렌터카 위치 지도" />
+            </div>
+
+            <a class="contact-call" href="tel:0312823647">
+              <img src="/images/contact.PNG" alt="상담문의 031-282-3647" />
+            </a>
+          </div>
         </section>
       </main>
     `;
   }
 }
+
