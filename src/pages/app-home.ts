@@ -497,7 +497,7 @@ export class AppHome extends LitElement {
               >
                 <img
                   class="instagram-icon"
-                  src="./icons/250px-Instagram.svg.webp"
+                  src="./assets/icons/250px-Instagram.svg.webp"
                   alt="Instagram"
                 />
               </a>
@@ -510,7 +510,7 @@ export class AppHome extends LitElement {
               >
                 <img
                   class="x-icon"
-                  src="./icons/330px-X_logo_2023.svg.webp"
+                  src="./assets/icons/330px-X_logo_2023.svg.webp"
                   alt="X"
                 />
               </a>
@@ -523,7 +523,7 @@ export class AppHome extends LitElement {
               >
                 <img
                   class="youtube-icon"
-                  src="./icons/330px-YouTube_full-color_icon_(2024).svg.webp"
+                  src="./assets/icons/330px-YouTube_full-color_icon_(2024).svg.webp"
                   alt="Youtube"
                 />
               </a>
