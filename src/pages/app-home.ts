@@ -13,7 +13,7 @@ export class AppHome extends LitElement {
 
     .page {
       --header-h: 64px;
-      --mainIMGH-h: 260px;
+      --main-img-h: 260px;
       --call-h: 56px;
 
       width: 100%;
@@ -26,17 +26,11 @@ export class AppHome extends LitElement {
     }
 
     .screen {
+      width: 100%;
       height: 100dvh;
       scroll-snap-align: start;
+      scroll-snap-stop: always;
       overflow: hidden;
-      background: #050505;
-    }
-
-    .full-page {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
       background: #050505;
     }
 
@@ -48,7 +42,6 @@ export class AppHome extends LitElement {
       background: linear-gradient(180deg, #111, #090909);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       box-sizing: border-box;
-      flex-shrink: 0;
     }
 
     .menu-btn {
@@ -72,20 +65,19 @@ export class AppHome extends LitElement {
       color: #d7a83f;
     }
 
-    .mainIMG {
+    .main-img {
       position: relative;
-      height: var(--mainIMGH-h);
+      height: var(--main-img-h);
       background: #000;
       overflow: hidden;
     }
 
-    .mainIMG-main {
+    .main-img img.main-img-bg {
       width: 100%;
       height: 100%;
       object-fit: fill;
       object-position: center top;
       display: block;
-      background: #000;
     }
 
     .social-links {
@@ -95,24 +87,20 @@ export class AppHome extends LitElement {
       display: flex;
       gap: 12px;
       z-index: 10;
-      // 소셜아이콘 화면 중앙정렬
-      // left: 50%;
-      // transform: translateX(-50%);
     }
 
     .social-links a {
       width: 40px;
       height: 40px;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       border-radius: 50%;
       background: rgba(0, 0, 0, 0.55);
       border: 1px solid rgba(215, 168, 63, 0.35);
       backdrop-filter: blur(10px);
-      transition: 0.25s;
+      -webkit-tap-highlight-color: transparent;
+      text-decoration: none;
     }
 
     .social-links a:active {
@@ -136,107 +124,11 @@ export class AppHome extends LitElement {
       height: 16px;
     }
 
-    .screen2 {
-      height: 100dvh;
-      scroll-snap-align: start;
-      overflow: hidden;
-      background: #283574;
-    }
-
-    .screen2IMG {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #283574;
-    }
-
-    .top-search {
-      position: absolute;
-      top: 24px;
-      right: 18px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      z-index: 20;
-    }
-
-    .top-search button {
-      background: white;
-      color: #333;
-      border: none;
-      padding: 6px 10px;
-      font-size: 13px;
-    }
-
-    .naver {
-      color: white;
-      font-size: 16px;
-      font-weight: 900;
-    }
-
-    .search-box {
-      width: 100px;
-      padding: 5px 9px;
-      border: 2px solid white;
-      color: white;
-      font-size: 13px;
-    }
-
-    .screen2IMG-text {
-      position: absolute;
-      left: 30px;
-      top: 330px;
-      z-index: 20;
-    }
-
-    .screen2IMG-text h1 {
-      margin: 0;
-      color: #e2be69;
-      font-size: clamp(42px, 13vw, 62px);
-      line-height: 1.08;
-      font-weight: 300;
-      letter-spacing: 1px;
-    }
-
-    .screen2IMG-line {
-      width: 170px;
-      height: 2px;
-      background: #6e6a7d;
-      margin: 34px 0;
-    }
-
-    .screen2IMG-text h2 {
-      margin: 0;
-      color: white;
-      font-size: clamp(34px, 9vw, 46px);
-      font-weight: 900;
-    }
-
-    .top-search button {
-      background: white;
-      color: #333;
-      border: none;
-      padding: 6px 12px;
-      cursor: pointer;
-    }
-
-    .screen2IMG-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center bottom;
-      z-index: 1;
-    }
-
     .service {
-      height: calc(100dvh - var(--header-h) - var(--mainIMGH-h));
+      height: calc(100dvh - var(--header-h) - var(--main-img-h));
       padding: clamp(8px, 1.4dvh, 14px) 12px clamp(8px, 1.2dvh, 12px);
       background: linear-gradient(180deg, #080808, #030303);
       box-sizing: border-box;
-
       display: grid;
       grid-template-rows: auto minmax(0, 1fr) auto;
       row-gap: clamp(6px, 1.1dvh, 12px);
@@ -298,7 +190,7 @@ export class AppHome extends LitElement {
       height: var(--call-h);
       border-radius: 10px;
       overflow: hidden;
-      flex-shrink: 0;
+      cursor: pointer;
     }
 
     .call img {
@@ -309,6 +201,134 @@ export class AppHome extends LitElement {
       background: #000;
     }
 
+    .screen2 {
+      position: relative;
+      background: #283574;
+    }
+
+    .screen2-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center bottom;
+      z-index: 1;
+    }
+
+    .top-search {
+      position: absolute;
+      top: 24px;
+      right: 18px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 3;
+    }
+
+    .naver {
+      color: white;
+      font-size: clamp(13px, 4vw, 16px);
+      font-weight: 900;
+    }
+
+    .search-box {
+      width: clamp(86px, 28vw, 108px);
+      padding: 5px 8px;
+      border: 2px solid white;
+      color: white;
+      font-size: clamp(11px, 3.5vw, 13px);
+      box-sizing: border-box;
+      white-space: nowrap;
+    }
+
+    .top-search button {
+      background: white;
+      color: #333;
+      border: none;
+      padding: 6px 10px;
+      font-size: clamp(11px, 3.5vw, 13px);
+      cursor: pointer;
+    }
+
+    .screen2-text {
+      position: absolute;
+      left: clamp(24px, 7vw, 34px);
+      top: clamp(220px, 42dvh, 340px);
+      z-index: 3;
+    }
+
+    .screen2-text h1 {
+      margin: 0;
+      color: #e2be69;
+      font-size: clamp(42px, 13vw, 62px);
+      line-height: 1.08;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    .screen2-line {
+      width: clamp(150px, 42vw, 180px);
+      height: 2px;
+      background: #6e6a7d;
+      margin: clamp(26px, 5dvh, 34px) 0;
+    }
+
+    .screen2-text h2 {
+      margin: 0;
+      color: white;
+      font-size: clamp(34px, 9vw, 46px);
+      font-weight: 900;
+    }
+
+    .screen3 {
+      background: #2f302d;
+    }
+
+    .screen3-page {
+      width: 100%;
+      height: 100%;
+
+      padding: 18px 16px;
+      box-sizing: border-box;
+
+      display: flex;
+      flex-direction: column;
+
+      gap: 16px;
+    }
+
+    .screen3-img-box-up {
+      flex: 1; /* 남는 공간 전부 */
+      min-height: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #444;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .screen3-img-box-up img {
+      width: 100%;
+      max-height: 246dvh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .screen3-img-box-down {
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #444;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .screen3-img-box-down img {
+      width: 100%;
+      max-height: 246dvh;
+      object-fit: contain;
+      display: block;
+    }
+
     .contact-screen {
       background: #2f302d;
     }
@@ -316,31 +336,13 @@ export class AppHome extends LitElement {
     .contact-page {
       width: 100%;
       height: 100%;
-      padding: 24px 18px;
+      padding: clamp(14px, 3dvh, 24px) 16px;
       box-sizing: border-box;
       background: #2f302d;
-
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 22px;
-    }
-
-    .contact-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-
-      color: white;
-      font-size: 16px;
-      font-weight: 900;
-    }
-
-    .contact-title span {
-      width: 6px;
-      height: 28px;
-      background: #d7a83f;
-      border-radius: 999px;
+      gap: clamp(12px, 2.6dvh, 20px);
     }
 
     .map-box {
@@ -353,28 +355,76 @@ export class AppHome extends LitElement {
 
     .map-box img {
       width: 100%;
-      height: auto;
+      max-height: 32dvh;
+      object-fit: fill;
       display: block;
     }
 
-    .contact-call {
-      display: block;
+    .contact-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      font-size: clamp(16px, 5vw, 22px);
+      font-weight: 900;
+    }
+
+    .contact-title span {
+      width: 6px;
+      height: 26px;
+      background: #d7a83f;
+      border-radius: 999px;
+      flex-shrink: 0;
+    }
+
+    .contact-box {
       width: 100%;
+      background: #363636;
       border-radius: 10px;
-      overflow: hidden;
-      text-decoration: none;
+      padding: 14px 16px;
+      box-sizing: border-box;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
     }
 
-    .contact-call img {
-      width: 100%;
-      height: auto;
-      display: block;
+    .contact-phone {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .label {
+      background: #f2d68a;
+      color: #2d2d2d;
+      font-size: clamp(14px, 4vw, 18px);
+      font-weight: 900;
+      padding: 4px 9px;
+      border-radius: 4px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .number {
+      color: white;
+      font-size: clamp(20px, 6vw, 28px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .contact-address {
+      color: #d8d8d8;
+      font-size: clamp(12px, 3.4vw, 14px);
+      font-weight: 500;
+      line-height: 1.6;
     }
 
     @media (max-height: 720px) {
       .page {
         --header-h: 56px;
-        --mainIMGH-h: 220px;
+        --main-img-h: 220px;
         --call-h: 48px;
       }
 
@@ -399,13 +449,9 @@ export class AppHome extends LitElement {
       .grid {
         gap: 6px 8px;
       }
-      .contact-page {
-        padding: 18px 14px;
-        gap: 14px;
-      }
 
-      .contact-title {
-        font-size: 22px;
+      .screen2-text {
+        top: 300px;
       }
     }
 
@@ -422,6 +468,10 @@ export class AppHome extends LitElement {
     }
   `;
 
+  private callPhone() {
+    window.location.href = 'tel:0312823647';
+  }
+
   render() {
     return html`
       <main class="page">
@@ -431,12 +481,13 @@ export class AppHome extends LitElement {
             <div class="header-title"><span>모정</span> 렌터카</div>
           </header>
 
-          <section class="mainIMG">
+          <section class="main-img">
             <img
-              class="mainIMG-main"
+              class="main-img-bg"
               src="/images/Mainpage_image.JPG"
               alt="MJ Rental main"
             />
+
             <div class="social-links">
               <a
                 href="https://instagram.com/yourid"
@@ -520,10 +571,7 @@ export class AppHome extends LitElement {
               </div>
             </div>
 
-            <div
-              class="call"
-              @click=${() => (window.location.href = 'tel:0312823647')}
-            >
+            <div class="call" @click=${this.callPhone}>
               <img
                 src="/images/Mainpage_bottom_call.JPG"
                 alt="지금 바로 문의하기"
@@ -532,36 +580,51 @@ export class AppHome extends LitElement {
           </section>
         </section>
 
-        <section class="screen2">
-          <div class="screen2IMG">
-            <div class="top-search">
-              <span class="naver">NAVER</span>
-              <div class="search-box">▶ 모정렌터카</div>
-              <button>검색</button>
-            </div>
-            <div class="screen2IMG-text">
-              <h1>
-                MOJEONG<br />
-                SIGNATURE<br />
-                RENTCAR
-              </h1>
-              <div class="screen2IMG-line"></div>
-              <h2>모정렌터카</h2>
-            </div>
-            <img class="screen2IMG-bg" src="/images/2-2.PNG" />
+        <section class="screen screen2">
+          <img
+            class="screen2-bg"
+            src="/images/2-2.PNG"
+            alt="모정렌터카 시그니처 렌트카"
+          />
+
+          <div class="top-search">
+            <span class="naver">NAVER</span>
+            <div class="search-box">▶ 모정렌터카</div>
+            <button>검색</button>
+          </div>
+
+          <div class="screen2-text">
+            <h1>
+              MOJEONG<br />
+              SIGNATURE<br />
+              RENTCAR
+            </h1>
+            <div class="screen2-line"></div>
+            <h2>모정렌터카</h2>
           </div>
         </section>
 
-        <section class="screen">
-          <img class="full-page" src="/images/3.png" />
+        <section class="screen screen3">
+          <div class="screen3-page">
+            <div class="screen3-img-box-up">
+              <img src="/images/3-1.PNG" alt="해안도로를 향해" />
+            </div>
+
+            <div class="screen3-img-box-down">
+              <img src="/images/3-2.PNG" alt="보유 차량 리스트" />
+            </div>
+          </div>
         </section>
 
         <section class="screen contact-screen">
           <div class="contact-page">
-
             <div class="map-box">
-              <img src="/images/map_top.PNG" alt="More than a rental. A refined experience." />
+              <img
+                src="/images/map_top.PNG"
+                alt="More than a rental. A refined experience."
+              />
             </div>
+
             <div class="contact-title">
               <span></span>
               찾아오시는 길
@@ -571,9 +634,17 @@ export class AppHome extends LitElement {
               <img src="/images/map.PNG" alt="모정렌터카 위치 지도" />
             </div>
 
-            <a class="contact-call" href="tel:0312823647">
-              <img src="/images/contact.PNG" alt="상담문의 031-282-3647" />
-            </a>
+            <div class="contact-box">
+              <div class="contact-phone" @click=${this.callPhone}>
+                <span class="label">상담문의</span>
+                <span class="number">031-282-3647</span>
+              </div>
+
+              <div class="contact-address">
+                <div>용인 : 경기도 용인시 기흥구 언남로 17-1 상가 201호</div>
+                <div>분당 : 경기도 성남시 분당구 성남대로 172번길24 712호</div>
+              </div>
+            </div>
           </div>
         </section>
       </main>
