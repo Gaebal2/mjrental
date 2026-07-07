@@ -296,38 +296,39 @@ export class AppHome extends LitElement {
       display: flex;
       flex-direction: column;
       gap: 16px;
+      overflow: hidden;
     }
 
     .screen3-img-box-up {
-      flex: 1; /* 남는 공간 전부 */
+      flex: 1;
       min-height: 0;
-
       border-radius: 10px;
       overflow: hidden;
       background: #444;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
     }
 
     .screen3-img-box-up img {
       width: 100%;
-      height: 100%;
-
+      max-height: 246dvh;
       object-fit: contain;
+      display: block;
     }
 
     .screen3-img-box-down {
-      height: 240px;
+      width: 100%;
       flex-shrink: 0;
-
       border-radius: 10px;
       overflow: hidden;
       background: #444;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
     }
 
     .screen3-img-box-down img {
       width: 100%;
-      height: 100%;
-
+      height: auto;
       object-fit: contain;
+      display: block;
     }
 
     .contact-screen {
@@ -337,27 +338,43 @@ export class AppHome extends LitElement {
     .contact-page {
       width: 100%;
       height: 100%;
-      padding: clamp(14px, 3dvh, 24px) 16px;
+      padding: 18px 16px;
       box-sizing: border-box;
-      background: #2f302d;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      gap: clamp(12px, 2.6dvh, 20px);
+      gap: 16px;
+      overflow: hidden;
     }
 
-    .map-box {
-      width: 100%;
+    .map-box-up {
+      flex: 1;
+      min-height: 0;
       border-radius: 10px;
       overflow: hidden;
       background: #444;
       box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
     }
 
-    .map-box img {
+    .map-box-up img {
       width: 100%;
-      max-height: 32dvh;
-      object-fit: fill;
+      max-height: 246dvh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .map-box-down {
+      width: 100%;
+      flex-shrink: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #444;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .map-box-down img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
       display: block;
     }
 
@@ -502,10 +519,6 @@ export class AppHome extends LitElement {
 
       .screen2-text {
         top: 300px;
-      }
-
-      .screen3-img-box-down {
-        height: 250px;
       }
     }
 
@@ -682,7 +695,7 @@ export class AppHome extends LitElement {
 
         <section class="screen contact-screen">
           <div class="contact-page">
-            <div class="map-box">
+            <div class="map-box-up">
               <img
                 src="./images/map_top.PNG"
                 alt="More than a rental. A refined experience."
@@ -694,7 +707,7 @@ export class AppHome extends LitElement {
               찾아오시는 길
             </div>
 
-            <div class="map-box">
+            <div class="map-box-down">
               <img src="./images/map.PNG" alt="모정렌터카 위치 지도" />
             </div>
 

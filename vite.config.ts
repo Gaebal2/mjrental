@@ -13,6 +13,7 @@ export default defineConfig({
   },
   plugins: [
     VitePWA({
+      registerType: 'prompt',
       strategies: "injectManifest",
       injectManifest: {
         swSrc: 'public/sw.js',
