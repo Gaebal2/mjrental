@@ -397,7 +397,7 @@ export class AppHome extends LitElement {
 
     .contact-box {
       width: 100%;
-      background: #363636;
+      background: #444;
       border-radius: 10px;
       padding: 14px 16px;
       box-sizing: border-box;
