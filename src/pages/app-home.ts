@@ -299,36 +299,35 @@ export class AppHome extends LitElement {
     }
 
     .screen3-img-box-up {
-      flex: 1;
+      flex: 1; /* 남는 공간 전부 */
       min-height: 0;
+
       border-radius: 10px;
       overflow: hidden;
       background: #444;
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
     }
 
     .screen3-img-box-up img {
       width: 100%;
       height: 100%;
+
       object-fit: contain;
-      display: block;
     }
 
     .screen3-img-box-down {
-      width: 100%;
-      height: clamp(240px, 38dvh, 360px);
+      height: 240px;
       flex-shrink: 0;
+
       border-radius: 10px;
       overflow: hidden;
       background: #444;
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
     }
 
     .screen3-img-box-down img {
       width: 100%;
       height: 100%;
+
       object-fit: contain;
-      display: block;
     }
 
     .contact-screen {
