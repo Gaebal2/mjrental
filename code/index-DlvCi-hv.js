@@ -511,36 +511,35 @@
     }
 
     .screen3-img-box-up {
-      flex: 1;
+      flex: 1; /* 남는 공간 전부 */
       min-height: 0;
+
       border-radius: 10px;
       overflow: hidden;
       background: #444;
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
     }
 
     .screen3-img-box-up img {
       width: 100%;
       height: 100%;
+
       object-fit: contain;
-      display: block;
     }
 
     .screen3-img-box-down {
-      width: 100%;
-      height: clamp(240px, 38dvh, 360px);
+      height: 240px;
       flex-shrink: 0;
+
       border-radius: 10px;
       overflow: hidden;
       background: #444;
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
     }
 
     .screen3-img-box-down img {
       width: 100%;
       height: 100%;
+
       object-fit: contain;
-      display: block;
     }
 
     .contact-screen {
@@ -733,7 +732,7 @@
         width: 430px;
       }
     }
-  `;Qt([ot()],Q.prototype,"showScrollGuide",2);Q=Qt([wt("app-home")],Q);const qe="modulepreload",Ge=function(o){return"/MJ_Rental/"+o},Bt={},te=function(t,e,r){let s=Promise.resolve();if(e&&e.length>0){document.getElementsByTagName("link");const n=document.querySelector("meta[property=csp-nonce]"),l=n?.nonce||n?.getAttribute("nonce");s=Promise.allSettled(e.map(a=>{if(a=Ge(a),a in Bt)return;Bt[a]=!0;const d=a.endsWith(".css"),b=d?'[rel="stylesheet"]':"";if(document.querySelector(`link[href="${a}"]${b}`))return;const c=document.createElement("link");if(c.rel=d?"stylesheet":qe,d||(c.as="script"),c.crossOrigin="",c.href=a,l&&c.setAttribute("nonce",l),document.head.appendChild(c),d)return new Promise((f,m)=>{c.addEventListener("load",f),c.addEventListener("error",()=>m(new Error(`Unable to preload CSS for ${a}`)))})}))}function i(n){const l=new Event("vite:preloadError",{cancelable:!0});if(l.payload=n,window.dispatchEvent(l),!l.defaultPrevented)throw n}return s.then(n=>{for(const l of n||[])l.status==="rejected"&&i(l.reason);return t().catch(i)})},yt=Symbol.for("app-tools::log::1.x");globalThis[yt]={setDebug:We,debug:"window"in globalThis?new URL(window.location.href).searchParams.has("app-tools-debug"):!1};function We(o){globalThis[yt].debug=!!o}function Je(o,t){globalThis[yt].debug&&(console.groupCollapsed(`[app-tools] ${o}`),t&&console.log(t),console.groupEnd())}function Ye(o){return(t,e)=>{Je(`${o}: ${t}`,e)}}const x=Ye("router");class Ke extends Event{constructor(t){super("route-changed"),this.context=t}}class Ze extends EventTarget{context={params:{},query:{},title:"",url:new URL(window.location.href)};constructor(t){super(),this.config=t,this.routes=t.routes.map(e=>({...e,urlPattern:new URLPattern({pathname:e.path,baseURL:window.location.href,search:"*",hash:"*"})})),x("Initialized routes",this.routes),queueMicrotask(()=>{this.navigate(new URL(window.location.href),{replace:!0})}),window.addEventListener("popstate",this._onPopState),window.addEventListener("click",this._onAnchorClick)}uninstall(){window.removeEventListener("popstate",this._onPopState),window.removeEventListener("click",this._onAnchorClick)}get url(){return new URL(window.location.href)}get fallback(){return new URL(this.config?.fallback||this.baseUrl.href.substring(window.location.origin.length),this.baseUrl)}get baseUrl(){return new URL("./",document.baseURI)}render(){return x(`Rendering route ${this.context.url.pathname}${this.context.url.search}${this.context.url.hash}`,{context:this.context,route:this.route}),this.route?.render?.(this.context)}_matchRoute(t){for(const e of this.routes){const r=e.urlPattern.exec(t);if(r){const{title:s}=e,i=Object.fromEntries(new URLSearchParams(t.search)),n=r?.pathname?.groups??{};return this.context={url:t,title:typeof s=="function"?s({params:n,query:i,url:t}):s,params:n,query:i},e}}return x(`No route matched for ${t.pathname}${t.search}${t.hash}`,t),null}_notifyUrlChanged(){this.dispatchEvent(new Ke(this.context))}_onPopState=()=>{this.navigate(new URL(window.location.href),{backNav:!0})};_onAnchorClick=t=>{if(t.defaultPrevented||t.button!==0||t.metaKey||t.ctrlKey||t.shiftKey)return;const e=t.composedPath().find(i=>i.tagName==="A");if(!e||!e.href)return;const r=new URL(e.href);if(this.url.href===r.href||r.host!==window.location.host||e.hasAttribute("download")||e.href.includes("mailto:"))return;const s=e.getAttribute("target");s&&s!==""&&s!=="_self"||(t.preventDefault(),this.navigate(r))};_collectPlugins(t){return[...this.config?.plugins??[],...t?.plugins??[]]}async navigate(t,e={}){typeof t=="string"&&(t=new URL(t,this.baseUrl));let r=this._matchRoute(t)||this._matchRoute(this.fallback);x(`Navigating to ${t.pathname}${t.search}${t.hash}`,{context:this.context,route:this.route});let s=this._collectPlugins(r);for(const i of s)try{const n=await i?.shouldNavigate?.(this.context);n&&(await n.condition()||(t=new URL(n.redirect,this.baseUrl),r=this._matchRoute(t)||this._matchRoute(this.fallback),s=this._collectPlugins(r),x("Redirecting",{context:this.context,route:this.route})))}catch(n){throw x(`Plugin "${i.name}" error on shouldNavigate hook`,n),n}if(this.route=r,!this.route)throw new Error(`[ROUTER] No route or fallback matched for url ${t}`);for(const i of s)try{await i?.beforeNavigation?.(this.context)}catch(n){throw x(`Plugin "${i.name}" error on beforeNavigation hook`,n),n}e?.replace?window.history.replaceState(null,"",`${t.pathname}${t.search}${t.hash}`):e.backNav||window.history.pushState(null,"",`${t.pathname}${t.search}${t.hash}`),document.title=this.context.title,this._notifyUrlChanged();for(const i of s)try{await i?.afterNavigation?.(this.context)}catch(n){throw x(`Plugin "${i.name}" error on afterNavigation hook`,n),n}}}function Xe(o){return{name:"lazy",beforeNavigation:()=>{o()}}}globalThis.URLPattern||await te(()=>import("./index-CBloBB_n.js"),[]);const Qe="/MJ_Rental/",It=new Ze({routes:[{path:dt(),title:"MJ Rental",render:()=>w`<app-home></app-home>`},{path:dt("about"),title:"About",plugins:[Xe(()=>te(()=>import("./app-about-Ds62qnY6.js"),[]))],render:()=>w`<app-about></app-about>`}]});function dt(o){var t=Qe;return o&&(t=t+o),t}var to=P`
+  `;Qt([ot()],Q.prototype,"showScrollGuide",2);Q=Qt([wt("app-home")],Q);const qe="modulepreload",Ge=function(o){return"/MJ_Rental/"+o},Bt={},te=function(t,e,r){let s=Promise.resolve();if(e&&e.length>0){document.getElementsByTagName("link");const n=document.querySelector("meta[property=csp-nonce]"),l=n?.nonce||n?.getAttribute("nonce");s=Promise.allSettled(e.map(a=>{if(a=Ge(a),a in Bt)return;Bt[a]=!0;const d=a.endsWith(".css"),b=d?'[rel="stylesheet"]':"";if(document.querySelector(`link[href="${a}"]${b}`))return;const c=document.createElement("link");if(c.rel=d?"stylesheet":qe,d||(c.as="script"),c.crossOrigin="",c.href=a,l&&c.setAttribute("nonce",l),document.head.appendChild(c),d)return new Promise((f,m)=>{c.addEventListener("load",f),c.addEventListener("error",()=>m(new Error(`Unable to preload CSS for ${a}`)))})}))}function i(n){const l=new Event("vite:preloadError",{cancelable:!0});if(l.payload=n,window.dispatchEvent(l),!l.defaultPrevented)throw n}return s.then(n=>{for(const l of n||[])l.status==="rejected"&&i(l.reason);return t().catch(i)})},yt=Symbol.for("app-tools::log::1.x");globalThis[yt]={setDebug:We,debug:"window"in globalThis?new URL(window.location.href).searchParams.has("app-tools-debug"):!1};function We(o){globalThis[yt].debug=!!o}function Je(o,t){globalThis[yt].debug&&(console.groupCollapsed(`[app-tools] ${o}`),t&&console.log(t),console.groupEnd())}function Ye(o){return(t,e)=>{Je(`${o}: ${t}`,e)}}const x=Ye("router");class Ke extends Event{constructor(t){super("route-changed"),this.context=t}}class Ze extends EventTarget{context={params:{},query:{},title:"",url:new URL(window.location.href)};constructor(t){super(),this.config=t,this.routes=t.routes.map(e=>({...e,urlPattern:new URLPattern({pathname:e.path,baseURL:window.location.href,search:"*",hash:"*"})})),x("Initialized routes",this.routes),queueMicrotask(()=>{this.navigate(new URL(window.location.href),{replace:!0})}),window.addEventListener("popstate",this._onPopState),window.addEventListener("click",this._onAnchorClick)}uninstall(){window.removeEventListener("popstate",this._onPopState),window.removeEventListener("click",this._onAnchorClick)}get url(){return new URL(window.location.href)}get fallback(){return new URL(this.config?.fallback||this.baseUrl.href.substring(window.location.origin.length),this.baseUrl)}get baseUrl(){return new URL("./",document.baseURI)}render(){return x(`Rendering route ${this.context.url.pathname}${this.context.url.search}${this.context.url.hash}`,{context:this.context,route:this.route}),this.route?.render?.(this.context)}_matchRoute(t){for(const e of this.routes){const r=e.urlPattern.exec(t);if(r){const{title:s}=e,i=Object.fromEntries(new URLSearchParams(t.search)),n=r?.pathname?.groups??{};return this.context={url:t,title:typeof s=="function"?s({params:n,query:i,url:t}):s,params:n,query:i},e}}return x(`No route matched for ${t.pathname}${t.search}${t.hash}`,t),null}_notifyUrlChanged(){this.dispatchEvent(new Ke(this.context))}_onPopState=()=>{this.navigate(new URL(window.location.href),{backNav:!0})};_onAnchorClick=t=>{if(t.defaultPrevented||t.button!==0||t.metaKey||t.ctrlKey||t.shiftKey)return;const e=t.composedPath().find(i=>i.tagName==="A");if(!e||!e.href)return;const r=new URL(e.href);if(this.url.href===r.href||r.host!==window.location.host||e.hasAttribute("download")||e.href.includes("mailto:"))return;const s=e.getAttribute("target");s&&s!==""&&s!=="_self"||(t.preventDefault(),this.navigate(r))};_collectPlugins(t){return[...this.config?.plugins??[],...t?.plugins??[]]}async navigate(t,e={}){typeof t=="string"&&(t=new URL(t,this.baseUrl));let r=this._matchRoute(t)||this._matchRoute(this.fallback);x(`Navigating to ${t.pathname}${t.search}${t.hash}`,{context:this.context,route:this.route});let s=this._collectPlugins(r);for(const i of s)try{const n=await i?.shouldNavigate?.(this.context);n&&(await n.condition()||(t=new URL(n.redirect,this.baseUrl),r=this._matchRoute(t)||this._matchRoute(this.fallback),s=this._collectPlugins(r),x("Redirecting",{context:this.context,route:this.route})))}catch(n){throw x(`Plugin "${i.name}" error on shouldNavigate hook`,n),n}if(this.route=r,!this.route)throw new Error(`[ROUTER] No route or fallback matched for url ${t}`);for(const i of s)try{await i?.beforeNavigation?.(this.context)}catch(n){throw x(`Plugin "${i.name}" error on beforeNavigation hook`,n),n}e?.replace?window.history.replaceState(null,"",`${t.pathname}${t.search}${t.hash}`):e.backNav||window.history.pushState(null,"",`${t.pathname}${t.search}${t.hash}`),document.title=this.context.title,this._notifyUrlChanged();for(const i of s)try{await i?.afterNavigation?.(this.context)}catch(n){throw x(`Plugin "${i.name}" error on afterNavigation hook`,n),n}}}function Xe(o){return{name:"lazy",beforeNavigation:()=>{o()}}}globalThis.URLPattern||await te(()=>import("./index-CBloBB_n.js"),[]);const Qe="/MJ_Rental/",It=new Ze({routes:[{path:dt(),title:"MJ Rental",render:()=>w`<app-home></app-home>`},{path:dt("about"),title:"About",plugins:[Xe(()=>te(()=>import("./app-about-E8xPicf6.js"),[]))],render:()=>w`<app-about></app-about>`}]});function dt(o){var t=Qe;return o&&(t=t+o),t}var to=P`
   :host {
     --track-width: 2px;
     --track-color: rgb(128 128 128 / 25%);
@@ -1620,4 +1619,4 @@
     background: #000;
   }
 `;pt=Eo([wt("app-index")],pt);export{io as H,L as S,$t as c,wo as e,P as i,$ as r,wt as t,w as x};
-//# sourceMappingURL=index-vQtOGpDr.js.map
+//# sourceMappingURL=index-DlvCi-hv.js.map
