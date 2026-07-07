@@ -1,8 +1,11 @@
 import { LitElement, css, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
 
 @customElement('app-home')
 export class AppHome extends LitElement {
+  @state()
+  private showScrollGuide = true;
+
   static styles = css`
     :host {
       display: block;
@@ -288,18 +291,15 @@ export class AppHome extends LitElement {
     .screen3-page {
       width: 100%;
       height: 100%;
-
       padding: 18px 16px;
       box-sizing: border-box;
-
       display: flex;
       flex-direction: column;
-
       gap: 16px;
     }
 
     .screen3-img-box-up {
-      flex: 1; /* 남는 공간 전부 */
+      flex: 1;
       min-height: 0;
       border-radius: 10px;
       overflow: hidden;
@@ -309,13 +309,15 @@ export class AppHome extends LitElement {
 
     .screen3-img-box-up img {
       width: 100%;
-      max-height: 246dvh;
+      height: 100%;
       object-fit: contain;
       display: block;
     }
 
     .screen3-img-box-down {
       width: 100%;
+      height: clamp(240px, 38dvh, 360px);
+      flex-shrink: 0;
       border-radius: 10px;
       overflow: hidden;
       background: #444;
@@ -324,7 +326,7 @@ export class AppHome extends LitElement {
 
     .screen3-img-box-down img {
       width: 100%;
-      max-height: 246dvh;
+      height: 100%;
       object-fit: contain;
       display: block;
     }
@@ -421,6 +423,55 @@ export class AppHome extends LitElement {
       line-height: 1.6;
     }
 
+    .scroll-guide {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+      animation: guideFloat 1.3s ease-in-out infinite;
+    }
+
+    .scroll-guide-arrow {
+      color: #d7a83f;
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1;
+      text-shadow: 0 0 18px rgba(215, 168, 63, 0.8);
+    }
+
+    .scroll-guide-text {
+      margin-top: 8px;
+      color: white;
+      font-size: clamp(16px, 4.2vw, 20px);
+      font-weight: 900;
+      white-space: nowrap;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.68);
+      border: 1px solid rgba(215, 168, 63, 0.45);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+    }
+
+    @keyframes guideFloat {
+      0% {
+        transform: translate(-50%, -50%) translateY(0);
+      }
+
+      50% {
+        transform: translate(-50%, -50%) translateY(-10px);
+      }
+
+      100% {
+        transform: translate(-50%, -50%) translateY(0);
+      }
+    }
+
     @media (max-height: 720px) {
       .page {
         --header-h: 56px;
@@ -453,6 +504,10 @@ export class AppHome extends LitElement {
       .screen2-text {
         top: 300px;
       }
+
+      .screen3-img-box-down {
+        height: 250px;
+      }
     }
 
     @media (min-width: 820px) {
@@ -472,9 +527,19 @@ export class AppHome extends LitElement {
     window.location.href = 'tel:0312823647';
   }
 
+  private onScroll(e: Event) {
+    if (!this.showScrollGuide) return;
+
+    const target = e.currentTarget as HTMLElement;
+
+    if (target.scrollTop > 20) {
+      this.showScrollGuide = false;
+    }
+  }
+
   render() {
     return html`
-      <main class="page">
+      <main class="page" @scroll=${this.onScroll}>
         <section class="screen">
           <header class="app-header">
             <button class="menu-btn">☰</button>
@@ -490,7 +555,7 @@ export class AppHome extends LitElement {
 
             <div class="social-links">
               <a
-                href="https://instagram.com/yourid"
+                href="https://youtube.com/@mjrental"
                 target="_blank"
                 rel="noopener"
                 aria-label="Instagram"
@@ -503,7 +568,7 @@ export class AppHome extends LitElement {
               </a>
 
               <a
-                href="https://x.com/clazyman"
+                href="https://youtube.com/@mjrental"
                 target="_blank"
                 rel="noopener"
                 aria-label="X"
@@ -516,7 +581,7 @@ export class AppHome extends LitElement {
               </a>
 
               <a
-                href="https://youtube.com/@clazyman"
+                href="https://youtube.com/@mjrental"
                 target="_blank"
                 rel="noopener"
                 aria-label="Youtube"
@@ -647,8 +712,16 @@ export class AppHome extends LitElement {
             </div>
           </div>
         </section>
+
+        ${this.showScrollGuide
+          ? html`
+              <div class="scroll-guide">
+                <div class="scroll-guide-arrow">↑</div>
+                <div class="scroll-guide-text">화면을 위로 스크롤 하세요!</div>
+              </div>
+            `
+          : null}
       </main>
     `;
   }
 }
-
