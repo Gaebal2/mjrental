@@ -667,31 +667,31 @@ export class AppHome extends LitElement {
             <div class="grid-wrapper">
               <div class="grid">
                 <div class="card">
-                  <img src="./images/grid1_left.png" alt="보험대차 전문" />
+                  <img src="./images/grid1_left_2.png" alt="보험대차 전문" />
                 </div>
                 <div class="card">
                   <img
-                    src="./images/grid1_right.png"
+                    src="./images/grid1_right_2.png"
                     alt="픽업 딜리버리 서비스"
                   />
                 </div>
                 <div class="card">
-                  <img src="./images/grid2_left.png" alt="금연차량 운영" />
+                  <img src="./images/grid2_left_2.png" alt="금연차량 운영" />
                 </div>
                 <div class="card">
                   <img
-                    src="./images/grid2_right.png"
+                    src="./images/grid2_right_2.png"
                     alt="수입 국산 대다수 차량 보유"
                   />
                 </div>
                 <div class="card">
                   <img
-                    src="./images/grid3_left.png"
+                    src="./images/grid3_left_2.png"
                     alt="전차종 세차시 살균소독"
                   />
                 </div>
                 <div class="card">
-                  <img src="./images/grid3_right.png" alt="리스렌트" />
+                  <img src="./images/grid3_right_2.png" alt="리스렌트" />
                 </div>
                 <div class="card">
                   <img src="./images/grid4_left.JPG" alt="장기렌트" />
