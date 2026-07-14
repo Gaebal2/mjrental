@@ -9,9 +9,7 @@ import { router } from './router';
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    const ok = window.confirm(
-      '새로운 버전이 있습니다.\n업데이트하시겠습니까?'
-    );
+    const ok = window.confirm('새로운 버전이 있습니다.\n업데이트하시겠습니까?');
 
     if (ok) {
       updateSW(true);
@@ -28,6 +26,8 @@ export class AppIndex extends LitElement {
   static styles = css`
     :host {
       display: block;
+      width: 100%;
+      min-height: 100%;
       margin: 0;
       padding: 0;
       background: #000;

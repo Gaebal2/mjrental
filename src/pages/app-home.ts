@@ -20,20 +20,21 @@ export class AppHome extends LitElement {
       --call-h: 56px;
 
       width: 100%;
-      height: 100dvh;
-      overflow-y: auto;
-      overflow-x: hidden;
-      scroll-snap-type: y mandatory;
-      scroll-behavior: smooth;
+      min-height: 100dvh;
+      height: auto;
+
+      overflow: visible;
+
       background: #050505;
     }
 
     .screen {
       width: 100%;
-      height: 100dvh;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-      overflow: hidden;
+      min-height: 0;
+      height: auto;
+
+      overflow: visible;
+
       background: #050505;
     }
 
@@ -66,6 +67,11 @@ export class AppHome extends LitElement {
 
     .header-title span {
       color: #d7a83f;
+    }
+
+    .home-screen {
+      display: flex;
+      flex-direction: column;
     }
 
     .main-img {
@@ -128,14 +134,19 @@ export class AppHome extends LitElement {
     }
 
     .service {
-      height: calc(100dvh - var(--header-h) - var(--main-img-h));
-      padding: clamp(8px, 1.4dvh, 14px) 12px clamp(8px, 1.2dvh, 12px);
+      width: 100%;
+      height: auto;
+
+      padding: clamp(8px, 1.4dvh, 14px) 12px clamp(12px, 2dvh, 20px);
+
       background: linear-gradient(180deg, #080808, #030303);
       box-sizing: border-box;
+
       display: flex;
       flex-direction: column;
-      row-gap: clamp(6px, 1.1dvh, 12px);
-      overflow: hidden;
+      gap: clamp(10px, 1.4dvh, 16px);
+
+      overflow: visible;
     }
 
     .section-title {
@@ -159,11 +170,8 @@ export class AppHome extends LitElement {
     }
 
     .grid-wrapper {
-      min-height: 0;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 100%;
+      overflow: visible;
     }
 
     .grid {
@@ -186,6 +194,11 @@ export class AppHome extends LitElement {
       height: 100%;
       object-fit: cover;
       display: block;
+    }
+
+    .call {
+      width: 100%;
+      margin-top: 4px;
     }
 
     .call-banner {
@@ -260,7 +273,11 @@ export class AppHome extends LitElement {
 
     .screen2 {
       position: relative;
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      min-height: 680px;
       background: #283574;
+      overflow: hidden;
     }
 
     .screen2-bg {
@@ -339,25 +356,24 @@ export class AppHome extends LitElement {
     }
 
     .screen3 {
+      width: 100%;
+      height: auto;
       background: #2f302d;
-      overflow: hidden;
+      overflow: visible;
     }
 
     .screen3-page {
       width: 100%;
-      height: 100%;
+      height: auto;
+
       padding: clamp(12px, 2dvh, 18px) clamp(10px, 3vw, 16px);
       box-sizing: border-box;
 
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-
       gap: clamp(10px, 1.8dvh, 16px);
-      overflow-y: auto;
-      overflow-x: hidden;
 
-      scrollbar-width: none;
+      overflow: visible;
     }
 
     .screen3-page::-webkit-scrollbar {
@@ -403,27 +419,24 @@ export class AppHome extends LitElement {
     }
 
     .contact-screen {
+      width: 100%;
+      height: auto;
       background: #2f302d;
-      overflow: hidden;
+      overflow: visible;
     }
 
     .contact-page {
       width: 100%;
-      height: 100%;
+      height: auto;
 
       padding: clamp(12px, 2dvh, 18px) clamp(10px, 3vw, 16px);
       box-sizing: border-box;
 
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-
       gap: clamp(10px, 1.8dvh, 16px);
 
-      overflow-y: auto;
-      overflow-x: hidden;
-
-      scrollbar-width: none;
+      overflow: visible;
     }
 
     .contact-page::-webkit-scrollbar {
@@ -765,20 +778,26 @@ export class AppHome extends LitElement {
     window.location.href = 'tel:0312823647';
   }
 
-  private onScroll(e: Event) {
-    if (!this.showScrollGuide) return;
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener('scroll', this.handleWindowScroll);
+  }
 
-    const target = e.currentTarget as HTMLElement;
+  disconnectedCallback() {
+    window.removeEventListener('scroll', this.handleWindowScroll);
+    super.disconnectedCallback();
+  }
 
-    if (target.scrollTop > 20) {
+  private handleWindowScroll = () => {
+    if (this.showScrollGuide && window.scrollY > 20) {
       this.showScrollGuide = false;
     }
-  }
+  };
 
   render() {
     return html`
-      <main class="page" @scroll=${this.onScroll}>
-        <section class="screen">
+      <main class="page">
+        <section class="screen home-screen">
           <header class="app-header">
             <button class="menu-btn">☰</button>
             <div class="header-title"><span>모정</span> 렌터카</div>
