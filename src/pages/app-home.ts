@@ -568,52 +568,107 @@ export class AppHome extends LitElement {
       line-height: 1.6;
     }
 
+    /* 스크롤 안내 전체 영역 */
     .scroll-guide {
       position: fixed;
       left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
+      bottom: clamp(32px, 8dvh, 70px);
+      transform: translateX(-50%);
       z-index: 9999;
+
       display: flex;
       flex-direction: column;
       align-items: center;
+
       pointer-events: none;
-      animation: guideFloat 1.3s ease-in-out infinite;
+      animation: guideFloat 2s ease-in-out infinite;
     }
 
-    .scroll-guide-arrow {
-      color: #d7a83f;
-      font-size: 48px;
-      font-weight: 900;
-      line-height: 1;
-      text-shadow: 0 0 18px rgba(215, 168, 63, 0.8);
+    /* 화살표 3개를 겹쳐서 세로 배치 */
+    .scroll-guide-arrows {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    /* CSS로 만드는 chevron-up */
+    .arrow-up {
+      width: 18px;
+      height: 18px;
+
+      border-top: 4px solid #d7a83f;
+      border-left: 4px solid #d7a83f;
+
+      margin: -4px 0;
+
+      opacity: 0.2;
+
+      transform: rotate(45deg);
+      animation: arrowUp 1.4s ease-in-out infinite;
+    }
+
+    /* 아래에서 위로 순서대로 밝아짐 */
+    .arrow-up:nth-child(1) {
+      animation-delay: 0.4s;
+    }
+
+    .arrow-up:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .arrow-up:nth-child(3) {
+      animation-delay: 0s;
     }
 
     .scroll-guide-text {
-      margin-top: 8px;
-      color: white;
-      font-size: clamp(16px, 4.2vw, 20px);
-      font-weight: 900;
+      color: #fff;
+      font-size: clamp(14px, 4vw, 18px);
+      font-weight: 800;
+      letter-spacing: -0.3px;
       white-space: nowrap;
-      padding: 10px 18px;
+
+      padding: 9px 16px;
       border-radius: 999px;
-      background: rgba(0, 0, 0, 0.68);
+
+      background: rgba(0, 0, 0, 0.72);
       border: 1px solid rgba(215, 168, 63, 0.45);
+
       backdrop-filter: blur(8px);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+      -webkit-backdrop-filter: blur(8px);
+
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
     }
 
-    @keyframes guideFloat {
+    @keyframes arrowUp {
       0% {
-        transform: translate(-50%, -50%) translateY(0);
+        opacity: 0.15;
+        border-color: #666;
+        transform: rotate(45deg) translate(6px, 6px);
       }
 
-      50% {
-        transform: translate(-50%, -50%) translateY(-10px);
+      45% {
+        opacity: 1;
+        border-color: #ffd76a;
+        filter: drop-shadow(0 0 6px rgba(255, 215, 106, 0.9));
       }
 
       100% {
-        transform: translate(-50%, -50%) translateY(0);
+        opacity: 0.15;
+        border-color: #666;
+        transform: rotate(45deg) translate(-6px, -6px);
+      }
+    }
+
+    @keyframes guideFloat {
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(-6px);
       }
     }
 
@@ -775,12 +830,18 @@ export class AppHome extends LitElement {
   `;
 
   private callPhone() {
+    window.location.href = 'tel:01085023647';
+  }
+
+  private callPhone2() {
     window.location.href = 'tel:0312823647';
   }
 
   connectedCallback() {
     super.connectedCallback();
-    window.addEventListener('scroll', this.handleWindowScroll);
+    window.addEventListener('scroll', this.handleWindowScroll, {
+      passive: true,
+    });
   }
 
   disconnectedCallback() {
@@ -879,7 +940,10 @@ export class AppHome extends LitElement {
             </div>
 
             <div class="call" @click=${this.callPhone}>
-              <div class="call-banner" onclick="location.href='tel:0312823647'">
+              <div
+                class="call-banner"
+                onclick="location.href='tel:01085023647'"
+              >
                 <div class="call-left">
                   <div class="phone-circle">☎</div>
                   <span class="call-text">지금 바로 문의하기</span>
@@ -945,7 +1009,7 @@ export class AppHome extends LitElement {
             </div>
 
             <div class="contact-box">
-              <div class="contact-phone" @click=${this.callPhone}>
+              <div class="contact-phone" @click=${this.callPhone2}>
                 <span class="label">상담문의</span>
                 <span class="number">031-282-3647</span>
               </div>
@@ -961,8 +1025,13 @@ export class AppHome extends LitElement {
         ${this.showScrollGuide
           ? html`
               <div class="scroll-guide">
-                <div class="scroll-guide-arrow">^</div>
-                <div class="scroll-guide-text">화면을 위로 스크롤 하세요!</div>
+                <div class="scroll-guide-arrows">
+                  <div class="arrow-up"></div>
+                  <div class="arrow-up"></div>
+                  <div class="arrow-up"></div>
+                </div>
+
+                <div class="scroll-guide-text">화면을 위로 스크롤 하세요</div>
               </div>
             `
           : null}
@@ -970,4 +1039,3 @@ export class AppHome extends LitElement {
     `;
   }
 }
-
