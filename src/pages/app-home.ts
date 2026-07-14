@@ -994,7 +994,7 @@ export class AppHome extends LitElement {
           <div class="contact-page">
             <div class="map-box-up">
               <img
-                src="./images/map_top.png"
+                src="./images/map_top_big.png"
                 alt="More than a rental. A refined experience."
               />
             </div>
