@@ -132,8 +132,8 @@ export class AppHome extends LitElement {
       padding: clamp(8px, 1.4dvh, 14px) 12px clamp(8px, 1.2dvh, 12px);
       background: linear-gradient(180deg, #080808, #030303);
       box-sizing: border-box;
-      display: grid;
-      grid-template-rows: auto minmax(0, 1fr) auto;
+      display: flex;
+      flex-direction: column;
       row-gap: clamp(6px, 1.1dvh, 12px);
       overflow: hidden;
     }
@@ -161,31 +161,31 @@ export class AppHome extends LitElement {
     .grid-wrapper {
       min-height: 0;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .grid {
       width: 100%;
-      height: 100%;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: repeat(4, minmax(0, 1fr));
-      gap: clamp(6px, 1dvh, 10px) 12px;
+      gap: 12px;
     }
 
     .card {
-      min-height: 0;
+      width: 100%;
+      aspect-ratio: 340 / 140;
       border-radius: 10px;
       overflow: hidden;
       background: #111;
-      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .card img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       display: block;
-      background: #111;
     }
 
     .call-banner {
@@ -340,121 +340,176 @@ export class AppHome extends LitElement {
 
     .screen3 {
       background: #2f302d;
+      overflow: hidden;
     }
 
     .screen3-page {
       width: 100%;
       height: 100%;
-      padding: 18px 16px;
+      padding: clamp(12px, 2dvh, 18px) clamp(10px, 3vw, 16px);
       box-sizing: border-box;
+
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      overflow: hidden;
+      justify-content: flex-start;
+
+      gap: clamp(10px, 1.8dvh, 16px);
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      scrollbar-width: none;
     }
 
+    .screen3-page::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* 위쪽 3-1 이미지 박스 */
     .screen3-img-box-up {
-      flex: 1;
-      min-height: 0;
+      width: 100%;
+      height: auto;
+      flex: 0 0 auto;
       border-radius: 10px;
       overflow: hidden;
-      background: #444;
+      background: transparent;
       box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
     }
 
+    /* 이미지 원본 비율에 맞춰 박스 높이도 자동 축소 */
     .screen3-img-box-up img {
       width: 100%;
-      max-height: 246dvh;
-      object-fit: contain;
+      height: auto;
       display: block;
+      object-fit: contain;
     }
 
+    /* 아래쪽 3-2 이미지 박스 */
     .screen3-img-box-down {
       width: 100%;
-      flex-shrink: 0;
+      height: auto;
+      flex: 0 0 auto;
       border-radius: 10px;
       overflow: hidden;
-      background: #444;
+      background: transparent;
       box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
     }
 
+    /* 아래 이미지도 원본 비율 유지 */
     .screen3-img-box-down img {
       width: 100%;
       height: auto;
-      object-fit: contain;
       display: block;
+      object-fit: contain;
     }
 
     .contact-screen {
       background: #2f302d;
+      overflow: hidden;
     }
 
     .contact-page {
       width: 100%;
       height: 100%;
-      padding: 18px 16px;
+
+      padding: clamp(12px, 2dvh, 18px) clamp(10px, 3vw, 16px);
       box-sizing: border-box;
+
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      overflow: hidden;
+      justify-content: flex-start;
+
+      gap: clamp(10px, 1.8dvh, 16px);
+
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      scrollbar-width: none;
     }
 
+    .contact-page::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* 위쪽 안내 이미지 */
     .map-box-up {
-      flex: 1;
-      min-height: 0;
+      width: 100%;
+      height: auto;
+
+      flex: 0 0 auto;
+
       border-radius: 10px;
       overflow: hidden;
-      background: #444;
+      background: transparent;
+
       box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
     }
 
     .map-box-up img {
       width: 100%;
-      max-height: 246dvh;
+      height: auto;
+
       object-fit: contain;
       display: block;
     }
 
+    /* 찾아오시는 길 제목 */
+    .contact-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      flex: 0 0 auto;
+
+      color: white;
+      font-size: clamp(16px, 5vw, 22px);
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .contact-title span {
+      width: 6px;
+      height: 26px;
+
+      background: #d7a83f;
+      border-radius: 999px;
+
+      flex-shrink: 0;
+    }
+
+    /* 지도 이미지 */
     .map-box-down {
       width: 100%;
-      flex-shrink: 0;
+      height: auto;
+
+      flex: 0 0 auto;
+
       border-radius: 10px;
       overflow: hidden;
-      background: #444;
+      background: transparent;
+
       box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
     }
 
     .map-box-down img {
       width: 100%;
       height: auto;
+
       object-fit: contain;
       display: block;
     }
 
-    .contact-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: white;
-      font-size: clamp(16px, 5vw, 22px);
-      font-weight: 900;
-    }
-
-    .contact-title span {
-      width: 6px;
-      height: 26px;
-      background: #d7a83f;
-      border-radius: 999px;
-      flex-shrink: 0;
-    }
-
+    /* 전화번호 및 주소 */
     .contact-box {
       width: 100%;
+
+      flex: 0 0 auto;
+
       background: #444;
       border-radius: 10px;
+
       padding: 14px 16px;
       box-sizing: border-box;
+
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
     }
 
@@ -462,8 +517,15 @@ export class AppHome extends LitElement {
       display: flex;
       align-items: center;
       gap: 10px;
+
       margin-bottom: 10px;
       cursor: pointer;
+
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .contact-phone:active {
+      transform: scale(0.99);
     }
 
     .label {
@@ -576,15 +638,125 @@ export class AppHome extends LitElement {
       }
     }
 
-    @media (min-width: 820px) {
-      :host {
-        display: flex;
-        justify-content: center;
-        background: #181818;
+    /* 일반 Fold 세로 화면 */
+    @media (min-width: 600px) and (max-width: 899px) {
+      .page {
+        width: min(100%, 600px);
+        max-width: 600px;
+        margin: 0 auto;
+
+        --header-h: 72px;
+        --main-img-h: 360px;
+        --call-h: 68px;
       }
 
+      .app-header {
+        padding: 0 24px;
+      }
+
+      .menu-btn {
+        width: 48px;
+        height: 48px;
+        font-size: 36px;
+      }
+
+      .header-title {
+        margin-left: 18px;
+        font-size: 26px;
+      }
+
+      .service {
+        padding: 16px 22px 20px;
+        row-gap: 16px;
+      }
+
+      .section-title {
+        font-size: 23px;
+      }
+
+      .grid-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .grid {
+        width: 100%;
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .card {
+        width: 100%;
+        aspect-ratio: 340 / 140;
+      }
+
+      .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .call-banner {
+        height: 68px;
+      }
+
+      .call-text {
+        font-size: 26px;
+      }
+    }
+
+    /* 태블릿·큰 Fold 가로 화면 */
+    @media (min-width: 900px) {
       .page {
-        width: 430px;
+        width: min(100%, 900px);
+        max-width: 900px;
+        margin: 0 auto;
+
+        --header-h: 76px;
+        --main-img-h: 420px;
+        --call-h: 72px;
+      }
+
+      .service {
+        padding: 18px 28px 22px;
+        row-gap: 18px;
+      }
+
+      .section-title {
+        font-size: 25px;
+      }
+
+      .grid-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .grid {
+        width: 100%;
+        max-width: 820px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px 24px;
+      }
+
+      .card {
+        width: 100%;
+        aspect-ratio: 340 / 140;
+      }
+
+      .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .call-banner {
+        height: 72px;
+      }
+
+      .call-text {
+        font-size: 28px;
       }
     }
   `;
@@ -667,37 +839,22 @@ export class AppHome extends LitElement {
             <div class="grid-wrapper">
               <div class="grid">
                 <div class="card">
-                  <img src="./images/grid1_left_2.png" alt="보험대차 전문" />
+                  <img src="./images/grid1_left_2.png" alt="사고대차" />
                 </div>
                 <div class="card">
-                  <img
-                    src="./images/grid1_right_2.png"
-                    alt="픽업 딜리버리 서비스"
-                  />
+                  <img src="./images/grid1_right_2.png" alt="일반렌탈" />
                 </div>
                 <div class="card">
-                  <img src="./images/grid2_left_2.png" alt="금연차량 운영" />
+                  <img src="./images/grid2_left_2.png" alt="월대, 장기렌탈" />
                 </div>
                 <div class="card">
-                  <img
-                    src="./images/grid2_right_2.png"
-                    alt="수입 국산 대다수 차량 보유"
-                  />
+                  <img src="./images/grid2_right_2.png" alt="VIP의전" />
                 </div>
                 <div class="card">
-                  <img
-                    src="./images/grid3_left_2.png"
-                    alt="전차종 세차시 살균소독"
-                  />
+                  <img src="./images/grid3_left_2.png" alt="공항픽업" />
                 </div>
                 <div class="card">
-                  <img src="./images/grid3_right_2.png" alt="리스렌트" />
-                </div>
-                <div class="card">
-                  <img src="./images/grid4_left.JPG" alt="장기렌트" />
-                </div>
-                <div class="card">
-                  <img src="./images/grid4_right.JPG" alt="단기렌트" />
+                  <img src="./images/grid3_right_2.png" alt="골프픽업" />
                 </div>
               </div>
             </div>
@@ -708,7 +865,7 @@ export class AppHome extends LitElement {
                   <div class="phone-circle">☎</div>
                   <span class="call-text">지금 바로 문의하기</span>
                 </div>
-              <div class="arrow">→</div>
+                <div class="arrow">→</div>
               </div>
             </div>
           </section>
@@ -741,7 +898,7 @@ export class AppHome extends LitElement {
         <section class="screen screen3">
           <div class="screen3-page">
             <div class="screen3-img-box-up">
-              <img src="./images/3-1.PNG" alt="해안도로를 향해" />
+              <img src="./images/3-1.jpg" alt="해안도로를 향해" />
             </div>
 
             <div class="screen3-img-box-down">
@@ -754,7 +911,7 @@ export class AppHome extends LitElement {
           <div class="contact-page">
             <div class="map-box-up">
               <img
-                src="./images/map_top.PNG"
+                src="./images/map_top.png"
                 alt="More than a rental. A refined experience."
               />
             </div>
@@ -785,7 +942,6 @@ export class AppHome extends LitElement {
         ${this.showScrollGuide
           ? html`
               <div class="scroll-guide">
-                <div class="scroll-guide-arrow">^</div>
                 <div class="scroll-guide-arrow">^</div>
                 <div class="scroll-guide-text">화면을 위로 스크롤 하세요!</div>
               </div>
