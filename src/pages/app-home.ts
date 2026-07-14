@@ -785,7 +785,8 @@ export class AppHome extends LitElement {
         ${this.showScrollGuide
           ? html`
               <div class="scroll-guide">
-                <div class="scroll-guide-arrow">↑</div>
+                <div class="scroll-guide-arrow">^</div>
+                <div class="scroll-guide-arrow">^</div>
                 <div class="scroll-guide-text">화면을 위로 스크롤 하세요!</div>
               </div>
             `
