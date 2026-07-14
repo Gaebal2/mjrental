@@ -562,9 +562,7 @@
     .screen3-img-box-up {
       width: 100%;
       height: auto;
-
       flex: 0 0 auto;
-
       border-radius: 10px;
       overflow: hidden;
       background: transparent;
@@ -575,7 +573,6 @@
     .screen3-img-box-up img {
       width: 100%;
       height: auto;
-
       display: block;
       object-fit: contain;
     }
@@ -584,9 +581,7 @@
     .screen3-img-box-down {
       width: 100%;
       height: auto;
-
       flex: 0 0 auto;
-
       border-radius: 10px;
       overflow: hidden;
       background: transparent;
@@ -597,81 +592,118 @@
     .screen3-img-box-down img {
       width: 100%;
       height: auto;
-
       display: block;
       object-fit: contain;
     }
 
     .contact-screen {
       background: #2f302d;
+      overflow: hidden;
     }
 
     .contact-page {
       width: 100%;
       height: 100%;
-      padding: 18px 16px;
+
+      padding: clamp(12px, 2dvh, 18px) clamp(10px, 3vw, 16px);
       box-sizing: border-box;
+
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      overflow: hidden;
+      justify-content: flex-start;
+
+      gap: clamp(10px, 1.8dvh, 16px);
+
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      scrollbar-width: none;
     }
 
+    .contact-page::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* 위쪽 안내 이미지 */
     .map-box-up {
-      flex: 1;
-      min-height: 0;
+      width: 100%;
+      height: auto;
+
+      flex: 0 0 auto;
+
       border-radius: 10px;
       overflow: hidden;
-      background: #444;
+      background: transparent;
+
       box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
     }
 
     .map-box-up img {
       width: 100%;
-      max-height: 246dvh;
+      height: auto;
+
       object-fit: contain;
       display: block;
     }
 
+    /* 찾아오시는 길 제목 */
+    .contact-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      flex: 0 0 auto;
+
+      color: white;
+      font-size: clamp(16px, 5vw, 22px);
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .contact-title span {
+      width: 6px;
+      height: 26px;
+
+      background: #d7a83f;
+      border-radius: 999px;
+
+      flex-shrink: 0;
+    }
+
+    /* 지도 이미지 */
     .map-box-down {
       width: 100%;
-      flex-shrink: 0;
+      height: auto;
+
+      flex: 0 0 auto;
+
       border-radius: 10px;
       overflow: hidden;
-      background: #444;
+      background: transparent;
+
       box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
     }
 
     .map-box-down img {
       width: 100%;
       height: auto;
+
       object-fit: contain;
       display: block;
     }
 
-    .contact-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: white;
-      font-size: clamp(16px, 5vw, 22px);
-      font-weight: 900;
-    }
-
-    .contact-title span {
-      width: 6px;
-      height: 26px;
-      background: #d7a83f;
-      border-radius: 999px;
-      flex-shrink: 0;
-    }
-
+    /* 전화번호 및 주소 */
     .contact-box {
       width: 100%;
+
+      flex: 0 0 auto;
+
       background: #444;
       border-radius: 10px;
+
       padding: 14px 16px;
       box-sizing: border-box;
+
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
     }
 
@@ -679,8 +711,15 @@
       display: flex;
       align-items: center;
       gap: 10px;
+
       margin-bottom: 10px;
       cursor: pointer;
+
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .contact-phone:active {
+      transform: scale(0.99);
     }
 
     .label {
@@ -816,7 +855,7 @@
         gap: 24px;
       }
     }
-  `;te([ot()],Q.prototype,"showScrollGuide",2);Q=te([wt("app-home")],Q);const xt=Symbol.for("app-tools::log::1.x");globalThis[xt]={setDebug:Ye,debug:"window"in globalThis?new URL(window.location.href).searchParams.has("app-tools-debug"):!1};function Ye(o){globalThis[xt].debug=!!o}function Je(o,t){globalThis[xt].debug&&(console.groupCollapsed(`[app-tools] ${o}`),t&&console.log(t),console.groupEnd())}function Ke(o){return(t,e)=>{Je(`${o}: ${t}`,e)}}const _=Ke("router");class Ze extends Event{constructor(t){super("route-changed"),this.context=t}}class Xe extends EventTarget{context={params:{},query:{},title:"",url:new URL(window.location.href)};constructor(t){super(),this.config=t,this.routes=t.routes.map(e=>({...e,urlPattern:new URLPattern({pathname:e.path,baseURL:window.location.href,search:"*",hash:"*"})})),_("Initialized routes",this.routes),queueMicrotask(()=>{this.navigate(new URL(window.location.href),{replace:!0})}),window.addEventListener("popstate",this._onPopState),window.addEventListener("click",this._onAnchorClick)}uninstall(){window.removeEventListener("popstate",this._onPopState),window.removeEventListener("click",this._onAnchorClick)}get url(){return new URL(window.location.href)}get fallback(){return new URL(this.config?.fallback||this.baseUrl.href.substring(window.location.origin.length),this.baseUrl)}get baseUrl(){return new URL("./",document.baseURI)}render(){return _(`Rendering route ${this.context.url.pathname}${this.context.url.search}${this.context.url.hash}`,{context:this.context,route:this.route}),this.route?.render?.(this.context)}_matchRoute(t){for(const e of this.routes){const r=e.urlPattern.exec(t);if(r){const{title:i}=e,s=Object.fromEntries(new URLSearchParams(t.search)),n=r?.pathname?.groups??{};return this.context={url:t,title:typeof i=="function"?i({params:n,query:s,url:t}):i,params:n,query:s},e}}return _(`No route matched for ${t.pathname}${t.search}${t.hash}`,t),null}_notifyUrlChanged(){this.dispatchEvent(new Ze(this.context))}_onPopState=()=>{this.navigate(new URL(window.location.href),{backNav:!0})};_onAnchorClick=t=>{if(t.defaultPrevented||t.button!==0||t.metaKey||t.ctrlKey||t.shiftKey)return;const e=t.composedPath().find(s=>s.tagName==="A");if(!e||!e.href)return;const r=new URL(e.href);if(this.url.href===r.href||r.host!==window.location.host||e.hasAttribute("download")||e.href.includes("mailto:"))return;const i=e.getAttribute("target");i&&i!==""&&i!=="_self"||(t.preventDefault(),this.navigate(r))};_collectPlugins(t){return[...this.config?.plugins??[],...t?.plugins??[]]}async navigate(t,e={}){typeof t=="string"&&(t=new URL(t,this.baseUrl));let r=this._matchRoute(t)||this._matchRoute(this.fallback);_(`Navigating to ${t.pathname}${t.search}${t.hash}`,{context:this.context,route:this.route});let i=this._collectPlugins(r);for(const s of i)try{const n=await s?.shouldNavigate?.(this.context);n&&(await n.condition()||(t=new URL(n.redirect,this.baseUrl),r=this._matchRoute(t)||this._matchRoute(this.fallback),i=this._collectPlugins(r),_("Redirecting",{context:this.context,route:this.route})))}catch(n){throw _(`Plugin "${s.name}" error on shouldNavigate hook`,n),n}if(this.route=r,!this.route)throw new Error(`[ROUTER] No route or fallback matched for url ${t}`);for(const s of i)try{await s?.beforeNavigation?.(this.context)}catch(n){throw _(`Plugin "${s.name}" error on beforeNavigation hook`,n),n}e?.replace?window.history.replaceState(null,"",`${t.pathname}${t.search}${t.hash}`):e.backNav||window.history.pushState(null,"",`${t.pathname}${t.search}${t.hash}`),document.title=this.context.title,this._notifyUrlChanged();for(const s of i)try{await s?.afterNavigation?.(this.context)}catch(n){throw _(`Plugin "${s.name}" error on afterNavigation hook`,n),n}}}function Qe(o){return{name:"lazy",beforeNavigation:()=>{o()}}}globalThis.URLPattern||await yt(()=>import("./index-CBloBB_n.js"),[]);const to="/mjrental/",jt=new Xe({routes:[{path:dt(),title:"MJ Rental",render:()=>y`<app-home></app-home>`},{path:dt("about"),title:"About",plugins:[Qe(()=>yt(()=>import("./app-about-IZZFUV9c.js"),[]))],render:()=>y`<app-about></app-about>`}]});function dt(o){var t=to;return o&&(t=t+o),t}var eo=L`
+  `;te([ot()],Q.prototype,"showScrollGuide",2);Q=te([wt("app-home")],Q);const xt=Symbol.for("app-tools::log::1.x");globalThis[xt]={setDebug:Ye,debug:"window"in globalThis?new URL(window.location.href).searchParams.has("app-tools-debug"):!1};function Ye(o){globalThis[xt].debug=!!o}function Je(o,t){globalThis[xt].debug&&(console.groupCollapsed(`[app-tools] ${o}`),t&&console.log(t),console.groupEnd())}function Ke(o){return(t,e)=>{Je(`${o}: ${t}`,e)}}const _=Ke("router");class Ze extends Event{constructor(t){super("route-changed"),this.context=t}}class Xe extends EventTarget{context={params:{},query:{},title:"",url:new URL(window.location.href)};constructor(t){super(),this.config=t,this.routes=t.routes.map(e=>({...e,urlPattern:new URLPattern({pathname:e.path,baseURL:window.location.href,search:"*",hash:"*"})})),_("Initialized routes",this.routes),queueMicrotask(()=>{this.navigate(new URL(window.location.href),{replace:!0})}),window.addEventListener("popstate",this._onPopState),window.addEventListener("click",this._onAnchorClick)}uninstall(){window.removeEventListener("popstate",this._onPopState),window.removeEventListener("click",this._onAnchorClick)}get url(){return new URL(window.location.href)}get fallback(){return new URL(this.config?.fallback||this.baseUrl.href.substring(window.location.origin.length),this.baseUrl)}get baseUrl(){return new URL("./",document.baseURI)}render(){return _(`Rendering route ${this.context.url.pathname}${this.context.url.search}${this.context.url.hash}`,{context:this.context,route:this.route}),this.route?.render?.(this.context)}_matchRoute(t){for(const e of this.routes){const r=e.urlPattern.exec(t);if(r){const{title:i}=e,s=Object.fromEntries(new URLSearchParams(t.search)),n=r?.pathname?.groups??{};return this.context={url:t,title:typeof i=="function"?i({params:n,query:s,url:t}):i,params:n,query:s},e}}return _(`No route matched for ${t.pathname}${t.search}${t.hash}`,t),null}_notifyUrlChanged(){this.dispatchEvent(new Ze(this.context))}_onPopState=()=>{this.navigate(new URL(window.location.href),{backNav:!0})};_onAnchorClick=t=>{if(t.defaultPrevented||t.button!==0||t.metaKey||t.ctrlKey||t.shiftKey)return;const e=t.composedPath().find(s=>s.tagName==="A");if(!e||!e.href)return;const r=new URL(e.href);if(this.url.href===r.href||r.host!==window.location.host||e.hasAttribute("download")||e.href.includes("mailto:"))return;const i=e.getAttribute("target");i&&i!==""&&i!=="_self"||(t.preventDefault(),this.navigate(r))};_collectPlugins(t){return[...this.config?.plugins??[],...t?.plugins??[]]}async navigate(t,e={}){typeof t=="string"&&(t=new URL(t,this.baseUrl));let r=this._matchRoute(t)||this._matchRoute(this.fallback);_(`Navigating to ${t.pathname}${t.search}${t.hash}`,{context:this.context,route:this.route});let i=this._collectPlugins(r);for(const s of i)try{const n=await s?.shouldNavigate?.(this.context);n&&(await n.condition()||(t=new URL(n.redirect,this.baseUrl),r=this._matchRoute(t)||this._matchRoute(this.fallback),i=this._collectPlugins(r),_("Redirecting",{context:this.context,route:this.route})))}catch(n){throw _(`Plugin "${s.name}" error on shouldNavigate hook`,n),n}if(this.route=r,!this.route)throw new Error(`[ROUTER] No route or fallback matched for url ${t}`);for(const s of i)try{await s?.beforeNavigation?.(this.context)}catch(n){throw _(`Plugin "${s.name}" error on beforeNavigation hook`,n),n}e?.replace?window.history.replaceState(null,"",`${t.pathname}${t.search}${t.hash}`):e.backNav||window.history.pushState(null,"",`${t.pathname}${t.search}${t.hash}`),document.title=this.context.title,this._notifyUrlChanged();for(const s of i)try{await s?.afterNavigation?.(this.context)}catch(n){throw _(`Plugin "${s.name}" error on afterNavigation hook`,n),n}}}function Qe(o){return{name:"lazy",beforeNavigation:()=>{o()}}}globalThis.URLPattern||await yt(()=>import("./index-CBloBB_n.js"),[]);const to="/mjrental/",jt=new Xe({routes:[{path:dt(),title:"MJ Rental",render:()=>y`<app-home></app-home>`},{path:dt("about"),title:"About",plugins:[Qe(()=>yt(()=>import("./app-about-1rOkZsh1.js"),[]))],render:()=>y`<app-about></app-about>`}]});function dt(o){var t=to;return o&&(t=t+o),t}var eo=L`
   :host {
     --track-width: 2px;
     --track-color: rgb(128 128 128 / 25%);
@@ -1704,4 +1743,4 @@
       background: #000;
     }
   `;pt=So([wt("app-index")],pt);export{no as H,z as S,kt as c,yo as e,L as i,k as r,wt as t,y as x};
-//# sourceMappingURL=index-Bcy_b18b.js.map
+//# sourceMappingURL=index-DM6aGLrt.js.map
