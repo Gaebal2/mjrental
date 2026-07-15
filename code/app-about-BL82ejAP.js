@@ -1,4 +1,4 @@
-import{i as l,c as p,S as h,H as b,x as c,e as m,r as u,t as v}from"./index-Dy-ROwxf.js";const g=l`
+import{i as l,c as p,S as h,H as b,x as c,e as m,r as u,t as v}from"./index-Chg8PF8N.js";const g=l`
   @media(min-width: 1000px) {
     sl-card {
       max-width: 70vw;
@@ -110,4 +110,4 @@ import{i as l,c as p,S as h,H as b,x as c,e as m,r as u,t as v}from"./index-Dy-R
         </sl-card>
       </main>
     `}};t.styles=[_,g];t=x([v("app-about")],t);export{t as AppAbout};
-//# sourceMappingURL=app-about-DAc6QrnA.js.map
+//# sourceMappingURL=app-about-BL82ejAP.js.map
