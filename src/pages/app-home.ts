@@ -118,14 +118,13 @@ export class AppHome extends LitElement {
     }
 
     .instagram-icon {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
     }
 
     .x-icon {
-      width: 18px;
-      height: 18px;
-      filter: brightness(0) invert(1);
+      width: 20px;
+      height: 20px;
     }
 
     .youtube-icon {
@@ -901,7 +900,7 @@ export class AppHome extends LitElement {
               >
                 <img
                   class="x-icon"
-                  src="./assets/icons/330px-X_logo_2023.svg.webp"
+                  src="./assets/icons/330px-X_logo_2023.svg.png"
                   alt="X"
                 />
               </a>
