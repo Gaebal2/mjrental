@@ -8,8 +8,12 @@ import './styles/global.css';
 import { router } from './router';
 
 const updateSW = registerSW({
+  immediate: true,
   onNeedRefresh() {
-    window.dispatchEvent(new CustomEvent('pwa-update-available'));
+    console.log('새 버전이 감지되어 앱을 자동으로 갱신합니다.');
+    window.setTimeout(() => {
+      updateSW(true);
+    }, 300);
   },
   onOfflineReady() {
     console.log('MJ Rental 앱을 오프라인에서도 사용할 수 있습니다.');
@@ -108,19 +112,32 @@ export class AppIndex extends LitElement {
 
   private deferredPrompt: any = null;
   private showInstallDialog = false;
-  private showUpdateDialog = false;
+  private updateCheckTimer: number | null = null;
 
   connectedCallback() {
     super.connectedCallback();
     window.addEventListener('beforeinstallprompt', this.handleBeforeInstallPrompt);
     window.addEventListener('appinstalled', this.handleAppInstalled);
     window.addEventListener('pwa-update-available', this.handlePwaUpdateAvailable);
+    window.addEventListener('focus', this.handleWindowFocus);
+    window.addEventListener('online', this.handleWindowFocus);
+    document.addEventListener('visibilitychange', this.handleVisibilityChange);
+
+    window.setTimeout(() => {
+      this.checkForUpdates();
+    }, 2000);
+
+    this.startUpdatePolling();
   }
 
   disconnectedCallback() {
     window.removeEventListener('beforeinstallprompt', this.handleBeforeInstallPrompt);
     window.removeEventListener('appinstalled', this.handleAppInstalled);
     window.removeEventListener('pwa-update-available', this.handlePwaUpdateAvailable);
+    window.removeEventListener('focus', this.handleWindowFocus);
+    window.removeEventListener('online', this.handleWindowFocus);
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    this.stopUpdatePolling();
     super.disconnectedCallback();
   }
 
@@ -149,8 +166,39 @@ export class AppIndex extends LitElement {
   };
 
   private handlePwaUpdateAvailable = () => {
-    this.showUpdateDialog = true;
-    this.requestUpdate();
+    this.refreshApp();
+  };
+
+  private handleWindowFocus = () => {
+    this.checkForUpdates();
+  };
+
+  private handleVisibilityChange = () => {
+    if (!document.hidden) {
+      this.checkForUpdates();
+    }
+  };
+
+  private startUpdatePolling() {
+    this.stopUpdatePolling();
+    this.updateCheckTimer = window.setInterval(() => {
+      if (!document.hidden) {
+        this.checkForUpdates();
+      }
+    }, 15000);
+  }
+
+  private stopUpdatePolling() {
+    if (this.updateCheckTimer !== null) {
+      window.clearInterval(this.updateCheckTimer);
+      this.updateCheckTimer = null;
+    }
+  }
+
+  private checkForUpdates = () => {
+    if (document.visibilityState === 'visible') {
+      void updateSW();
+    }
   };
 
   private async installApp() {
@@ -181,22 +229,13 @@ export class AppIndex extends LitElement {
     this.requestUpdate();
   }
 
-  private dismissUpdateDialog() {
-    this.showUpdateDialog = false;
-    this.requestUpdate();
-  }
-
   private refreshApp() {
     updateSW(true);
-    this.showUpdateDialog = false;
-    this.requestUpdate();
   }
 
   render() {
     return html`
-      ${this.showInstallDialog || this.showUpdateDialog
-        ? html`<div class="install-backdrop"></div>`
-        : ''}
+      ${this.showInstallDialog ? html`<div class="install-backdrop"></div>` : ''}
       ${this.showInstallDialog
         ? html`
             <div
@@ -212,25 +251,6 @@ export class AppIndex extends LitElement {
               <div class="install-actions">
                 <button class="close-btn" @click=${this.dismissInstallDialog}>닫기</button>
                 <button class="install-btn" @click=${this.installApp}>설치</button>
-              </div>
-            </div>
-          `
-        : ''}
-      ${this.showUpdateDialog
-        ? html`
-            <div
-              class="install-dialog"
-              role="dialog"
-              aria-label="앱 업데이트 안내"
-              style="width: 250px; min-width: 250px; max-width: 250px;"
-            >
-              <div>
-                <strong>새 버전이 있습니다.</strong>
-                <span>모정렌터카 앱의 업데이트를 진행 할까요?</span>
-              </div>
-              <div class="install-actions">
-                <button class="close-btn" @click=${this.dismissUpdateDialog}>나중에</button>
-                <button class="install-btn" @click=${this.refreshApp}>업데이트</button>
               </div>
             </div>
           `
