@@ -4,7 +4,7 @@ import { customElement, state } from 'lit/decorators.js';
 @customElement('app-home')
 export class AppHome extends LitElement {
   @state()
-  private showScrollGuide = true;
+  private showScrollGuide = false;
 
   static styles = css`
     :host {
@@ -842,16 +842,24 @@ export class AppHome extends LitElement {
     window.addEventListener('scroll', this.handleWindowScroll, {
       passive: true,
     });
+    window.addEventListener('pwa-install-dialog-closed', this.handleInstallDialogClosed);
   }
 
   disconnectedCallback() {
     window.removeEventListener('scroll', this.handleWindowScroll);
+    window.removeEventListener('pwa-install-dialog-closed', this.handleInstallDialogClosed);
     super.disconnectedCallback();
   }
 
   private handleWindowScroll = () => {
     if (this.showScrollGuide && window.scrollY > 20) {
       this.showScrollGuide = false;
+    }
+  };
+
+  private handleInstallDialogClosed = () => {
+    if (window.scrollY <= 20) {
+      this.showScrollGuide = true;
     }
   };
 
