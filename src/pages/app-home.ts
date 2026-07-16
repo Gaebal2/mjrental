@@ -123,8 +123,8 @@ export class AppHome extends LitElement {
     }
 
     .x-icon {
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
     }
 
     .youtube-icon {
