@@ -160,23 +160,19 @@
 
         <section class="screen screen3">
           <div class="screen3-page">
-            <div class="screen3-left">
-              <div class="screen3-img-box-down">
-                <img src="./images/3-2.png" alt="보유 차량 리스트" />
-              </div>
+            <div class="screen3-img-box-down">
+              <img src="./images/3-2.png" alt="보유 차량 리스트" />
             </div>
 
-            <div class="screen3-right">
-              <div class="screen3-img-box-up">
-                <img src="./images/3-1.jpg" alt="해안도로를 향해" />
-              </div>
+            <div class="screen3-img-box-up">
+              <img src="./images/3-1.jpg" alt="해안도로를 향해" />
+            </div>
 
-              <div class="map-box-up desktop-map">
-                <img
-                  src="./images/map_top_big.png"
-                  alt="More than a rental. A refined experience."
-                />
-              </div>
+            <div class="map-box-up desktop-map">
+              <img
+                src="./images/map_top_big.png"
+                alt="More than a rental. A refined experience."
+              />
             </div>
           </div>
         </section>
@@ -1224,15 +1220,23 @@
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr;
 
+        grid-template-areas:
+          'down up'
+          'down map';
+
         gap: 28px;
       }
 
-      .screen3-left {
-        grid-row: 1 / span 2;
+      .screen3-img-box-down {
+        grid-area: down;
       }
 
-      .screen3-right {
-        display: contents;
+      .screen3-img-box-up {
+        grid-area: up;
+      }
+
+      .desktop-map {
+        grid-area: map;
       }
 
       .screen3-img-box-down {
@@ -1312,7 +1316,7 @@
         font-size: 16px;
       }
     }
-  `;ee([ot()],Q.prototype,"showScrollGuide",2);Q=ee([xt("app-home")],Q);const _t=Symbol.for("app-tools::log::1.x");globalThis[_t]={setDebug:Je,debug:"window"in globalThis?new URL(window.location.href).searchParams.has("app-tools-debug"):!1};function Je(o){globalThis[_t].debug=!!o}function Ke(o,t){globalThis[_t].debug&&(console.groupCollapsed(`[app-tools] ${o}`),t&&console.log(t),console.groupEnd())}function Xe(o){return(t,e)=>{Ke(`${o}: ${t}`,e)}}const y=Xe("router");class Ze extends Event{constructor(t){super("route-changed"),this.context=t}}class Qe extends EventTarget{context={params:{},query:{},title:"",url:new URL(window.location.href)};constructor(t){super(),this.config=t,this.routes=t.routes.map(e=>({...e,urlPattern:new URLPattern({pathname:e.path,baseURL:window.location.href,search:"*",hash:"*"})})),y("Initialized routes",this.routes),queueMicrotask(()=>{this.navigate(new URL(window.location.href),{replace:!0})}),window.addEventListener("popstate",this._onPopState),window.addEventListener("click",this._onAnchorClick)}uninstall(){window.removeEventListener("popstate",this._onPopState),window.removeEventListener("click",this._onAnchorClick)}get url(){return new URL(window.location.href)}get fallback(){return new URL(this.config?.fallback||this.baseUrl.href.substring(window.location.origin.length),this.baseUrl)}get baseUrl(){return new URL("./",document.baseURI)}render(){return y(`Rendering route ${this.context.url.pathname}${this.context.url.search}${this.context.url.hash}`,{context:this.context,route:this.route}),this.route?.render?.(this.context)}_matchRoute(t){for(const e of this.routes){const i=e.urlPattern.exec(t);if(i){const{title:r}=e,s=Object.fromEntries(new URLSearchParams(t.search)),n=i?.pathname?.groups??{};return this.context={url:t,title:typeof r=="function"?r({params:n,query:s,url:t}):r,params:n,query:s},e}}return y(`No route matched for ${t.pathname}${t.search}${t.hash}`,t),null}_notifyUrlChanged(){this.dispatchEvent(new Ze(this.context))}_onPopState=()=>{this.navigate(new URL(window.location.href),{backNav:!0})};_onAnchorClick=t=>{if(t.defaultPrevented||t.button!==0||t.metaKey||t.ctrlKey||t.shiftKey)return;const e=t.composedPath().find(s=>s.tagName==="A");if(!e||!e.href)return;const i=new URL(e.href);if(this.url.href===i.href||i.host!==window.location.host||e.hasAttribute("download")||e.href.includes("mailto:"))return;const r=e.getAttribute("target");r&&r!==""&&r!=="_self"||(t.preventDefault(),this.navigate(i))};_collectPlugins(t){return[...this.config?.plugins??[],...t?.plugins??[]]}async navigate(t,e={}){typeof t=="string"&&(t=new URL(t,this.baseUrl));let i=this._matchRoute(t)||this._matchRoute(this.fallback);y(`Navigating to ${t.pathname}${t.search}${t.hash}`,{context:this.context,route:this.route});let r=this._collectPlugins(i);for(const s of r)try{const n=await s?.shouldNavigate?.(this.context);n&&(await n.condition()||(t=new URL(n.redirect,this.baseUrl),i=this._matchRoute(t)||this._matchRoute(this.fallback),r=this._collectPlugins(i),y("Redirecting",{context:this.context,route:this.route})))}catch(n){throw y(`Plugin "${s.name}" error on shouldNavigate hook`,n),n}if(this.route=i,!this.route)throw new Error(`[ROUTER] No route or fallback matched for url ${t}`);for(const s of r)try{await s?.beforeNavigation?.(this.context)}catch(n){throw y(`Plugin "${s.name}" error on beforeNavigation hook`,n),n}e?.replace?window.history.replaceState(null,"",`${t.pathname}${t.search}${t.hash}`):e.backNav||window.history.pushState(null,"",`${t.pathname}${t.search}${t.hash}`),document.title=this.context.title,this._notifyUrlChanged();for(const s of r)try{await s?.afterNavigation?.(this.context)}catch(n){throw y(`Plugin "${s.name}" error on afterNavigation hook`,n),n}}}function to(o){return{name:"lazy",beforeNavigation:()=>{o()}}}globalThis.URLPattern||await yt(()=>import("./index-CBloBB_n.js"),[]);const eo="/mjrental/",Bt=new Qe({routes:[{path:dt(),title:"MJ Rental",render:()=>f`<app-home></app-home>`},{path:dt("about"),title:"About",plugins:[to(()=>yt(()=>import("./app-about-DrpfsLH0.js"),[]))],render:()=>f`<app-about></app-about>`}]});function dt(o){var t=eo;return o&&(t=t+o),t}var oo=P`
+  `;ee([ot()],Q.prototype,"showScrollGuide",2);Q=ee([xt("app-home")],Q);const _t=Symbol.for("app-tools::log::1.x");globalThis[_t]={setDebug:Je,debug:"window"in globalThis?new URL(window.location.href).searchParams.has("app-tools-debug"):!1};function Je(o){globalThis[_t].debug=!!o}function Ke(o,t){globalThis[_t].debug&&(console.groupCollapsed(`[app-tools] ${o}`),t&&console.log(t),console.groupEnd())}function Xe(o){return(t,e)=>{Ke(`${o}: ${t}`,e)}}const y=Xe("router");class Ze extends Event{constructor(t){super("route-changed"),this.context=t}}class Qe extends EventTarget{context={params:{},query:{},title:"",url:new URL(window.location.href)};constructor(t){super(),this.config=t,this.routes=t.routes.map(e=>({...e,urlPattern:new URLPattern({pathname:e.path,baseURL:window.location.href,search:"*",hash:"*"})})),y("Initialized routes",this.routes),queueMicrotask(()=>{this.navigate(new URL(window.location.href),{replace:!0})}),window.addEventListener("popstate",this._onPopState),window.addEventListener("click",this._onAnchorClick)}uninstall(){window.removeEventListener("popstate",this._onPopState),window.removeEventListener("click",this._onAnchorClick)}get url(){return new URL(window.location.href)}get fallback(){return new URL(this.config?.fallback||this.baseUrl.href.substring(window.location.origin.length),this.baseUrl)}get baseUrl(){return new URL("./",document.baseURI)}render(){return y(`Rendering route ${this.context.url.pathname}${this.context.url.search}${this.context.url.hash}`,{context:this.context,route:this.route}),this.route?.render?.(this.context)}_matchRoute(t){for(const e of this.routes){const i=e.urlPattern.exec(t);if(i){const{title:r}=e,s=Object.fromEntries(new URLSearchParams(t.search)),n=i?.pathname?.groups??{};return this.context={url:t,title:typeof r=="function"?r({params:n,query:s,url:t}):r,params:n,query:s},e}}return y(`No route matched for ${t.pathname}${t.search}${t.hash}`,t),null}_notifyUrlChanged(){this.dispatchEvent(new Ze(this.context))}_onPopState=()=>{this.navigate(new URL(window.location.href),{backNav:!0})};_onAnchorClick=t=>{if(t.defaultPrevented||t.button!==0||t.metaKey||t.ctrlKey||t.shiftKey)return;const e=t.composedPath().find(s=>s.tagName==="A");if(!e||!e.href)return;const i=new URL(e.href);if(this.url.href===i.href||i.host!==window.location.host||e.hasAttribute("download")||e.href.includes("mailto:"))return;const r=e.getAttribute("target");r&&r!==""&&r!=="_self"||(t.preventDefault(),this.navigate(i))};_collectPlugins(t){return[...this.config?.plugins??[],...t?.plugins??[]]}async navigate(t,e={}){typeof t=="string"&&(t=new URL(t,this.baseUrl));let i=this._matchRoute(t)||this._matchRoute(this.fallback);y(`Navigating to ${t.pathname}${t.search}${t.hash}`,{context:this.context,route:this.route});let r=this._collectPlugins(i);for(const s of r)try{const n=await s?.shouldNavigate?.(this.context);n&&(await n.condition()||(t=new URL(n.redirect,this.baseUrl),i=this._matchRoute(t)||this._matchRoute(this.fallback),r=this._collectPlugins(i),y("Redirecting",{context:this.context,route:this.route})))}catch(n){throw y(`Plugin "${s.name}" error on shouldNavigate hook`,n),n}if(this.route=i,!this.route)throw new Error(`[ROUTER] No route or fallback matched for url ${t}`);for(const s of r)try{await s?.beforeNavigation?.(this.context)}catch(n){throw y(`Plugin "${s.name}" error on beforeNavigation hook`,n),n}e?.replace?window.history.replaceState(null,"",`${t.pathname}${t.search}${t.hash}`):e.backNav||window.history.pushState(null,"",`${t.pathname}${t.search}${t.hash}`),document.title=this.context.title,this._notifyUrlChanged();for(const s of r)try{await s?.afterNavigation?.(this.context)}catch(n){throw y(`Plugin "${s.name}" error on afterNavigation hook`,n),n}}}function to(o){return{name:"lazy",beforeNavigation:()=>{o()}}}globalThis.URLPattern||await yt(()=>import("./index-CBloBB_n.js"),[]);const eo="/mjrental/",Bt=new Qe({routes:[{path:dt(),title:"MJ Rental",render:()=>f`<app-home></app-home>`},{path:dt("about"),title:"About",plugins:[to(()=>yt(()=>import("./app-about-Dsa9nCjI.js"),[]))],render:()=>f`<app-about></app-about>`}]});function dt(o){var t=eo;return o&&(t=t+o),t}var oo=P`
   :host {
     --track-width: 2px;
     --track-color: rgb(128 128 128 / 25%);
@@ -2437,4 +2441,4 @@
       }
     }
   `;gt=So([xt("app-index")],gt);export{ao as H,z as S,At as c,yo as e,P as i,$ as r,xt as t,f as x};
-//# sourceMappingURL=index-BYsufBQl.js.map
+//# sourceMappingURL=index-C0jtJguf.js.map
