@@ -7,7 +7,7 @@
   "short_name": "MJ_Rental",
   "theme_color": "#181818",
   "description": "모정렌터카 공식 웹앱",
-  "orientation": "any",
+  "orientation": "portrait",
   "background_color": "#050505",
   "related_applications": [],
   "prefer_related_applications": false,
