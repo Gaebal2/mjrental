@@ -191,7 +191,7 @@
 //     .card img {
 //       width: 100%;
 //       height: 100%;
-//       object-fit: cover;
+//       object-fit: fill;
 //       display: block;
 //     }
 
@@ -640,6 +640,14 @@
 //       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 //     }
 
+//     .mobile-map {
+//       display: block;
+//     }
+
+//     .desktop-map {
+//       display: none;
+//     }
+
 //     @keyframes arrowUp {
 //       0% {
 //         opacity: 0.15;
@@ -993,9 +1001,62 @@
 
 //       .screen3-page {
 //         display: grid;
-//         grid-template-columns: repeat(2, minmax(0, 1fr));
-//         align-items: start;
+
+//         grid-template-columns: 1fr 1fr;
+//         grid-template-rows: 1fr 1fr;
+
 //         gap: 28px;
+//       }
+
+//       .screen3-left {
+//         grid-row: 1 / span 2;
+//       }
+
+//       .screen3-right {
+//         display: grid;
+//         grid-template-rows: 1fr 1fr;
+//         gap: 28px;
+//       }
+
+//       .screen3-img-box-down {
+//         width: 100%;
+//         height: 100%;
+//       }
+
+//       .screen3-img-box-up {
+//         width: 100%;
+//         height: 100%;
+//       }
+
+//       .map-box-up {
+//         width: 100%;
+//         height: 100%;
+//         max-width: none;
+//         margin: 0;
+//       }
+
+//       .screen3-img-box-down img,
+//       .screen3-img-box-up img {
+//         width: 100%;
+//         height: 100%;
+//         object-fit: contain;
+//         background: #2f302d;
+//       }
+
+//       .desktop-map img {
+//         width: 100%;
+//         height: 100%;
+
+//         object-fit: cover;
+//         object-position: center 45%;
+//       }
+
+//       .mobile-map {
+//         display: none;
+//       }
+
+//       .desktop-map {
+//         overflow: hidden;
 //       }
 
 //       .contact-page {
@@ -1005,13 +1066,6 @@
 
 //         display: flex;
 //         flex-direction: column;
-//       }
-
-//       .map-box-up {
-//         order: -1;
-//         width: 100%;
-//         max-width: 1000px;
-//         margin: 0 auto 40px;
 //       }
 
 //       .contact-title {
@@ -1207,19 +1261,30 @@
 
 //         <section class="screen screen3">
 //           <div class="screen3-page">
-//             <div class="screen3-img-box-up">
-//               <img src="./images/3-1.jpg" alt="해안도로를 향해" />
+//             <div class="screen3-left">
+//               <div class="screen3-img-box-down">
+//                 <img src="./images/3-2.png" alt="보유 차량 리스트" />
+//               </div>
 //             </div>
 
-//             <div class="screen3-img-box-down">
-//               <img src="./images/3-2.png" alt="보유 차량 리스트" />
+//             <div class="screen3-right">
+//               <div class="screen3-img-box-up">
+//                 <img src="./images/3-1.jpg" alt="해안도로를 향해" />
+//               </div>
+
+//               <div class="map-box-up desktop-map">
+//                 <img
+//                   src="./images/map_top_big.png"
+//                   alt="More than a rental. A refined experience."
+//                 />
+//               </div>
 //             </div>
 //           </div>
 //         </section>
 
 //         <section class="screen contact-screen">
 //           <div class="contact-page">
-//             <div class="map-box-up">
+//             <div class="map-box-up mobile-map">
 //               <img
 //                 src="./images/map_top_big.png"
 //                 alt="More than a rental. A refined experience."

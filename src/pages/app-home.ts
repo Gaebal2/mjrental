@@ -191,7 +191,7 @@ export class AppHome extends LitElement {
     .card img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: fill;
       display: block;
     }
 
@@ -362,15 +362,19 @@ export class AppHome extends LitElement {
     }
 
     .screen3-page {
+      --screen3-gap: clamp(10px, 1.8dvh, 16px);
+
       width: 100%;
       height: auto;
 
-      padding: clamp(12px, 2dvh, 18px) clamp(10px, 3vw, 16px);
+      /* 모바일에서는 아래쪽 padding 제거 */
+      padding: clamp(12px, 2dvh, 18px) clamp(10px, 3vw, 16px) 0;
+
       box-sizing: border-box;
 
       display: flex;
       flex-direction: column;
-      gap: clamp(10px, 1.8dvh, 16px);
+      gap: var(--screen3-gap);
 
       overflow: visible;
     }
@@ -425,15 +429,22 @@ export class AppHome extends LitElement {
     }
 
     .contact-page {
+      --screen3-gap: clamp(10px, 1.8dvh, 16px);
+
       width: 100%;
       height: auto;
 
-      padding: clamp(12px, 2dvh, 18px) clamp(10px, 3vw, 16px);
+      /*
+   * screen3-page와 contact-page 사이에
+   * 정확히 한 번만 동일한 간격을 넣음
+   */
+      padding: var(--screen3-gap) clamp(10px, 3vw, 16px) clamp(12px, 2dvh, 18px);
+
       box-sizing: border-box;
 
       display: flex;
       flex-direction: column;
-      gap: clamp(10px, 1.8dvh, 16px);
+      gap: var(--screen3-gap);
 
       overflow: visible;
     }
@@ -640,6 +651,15 @@ export class AppHome extends LitElement {
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
     }
 
+    .mobile-map {
+      display: block;
+      margin: 0;
+    }
+
+    .desktop-map {
+      display: none;
+    }
+
     @keyframes arrowUp {
       0% {
         opacity: 0.15;
@@ -774,7 +794,7 @@ export class AppHome extends LitElement {
     }
 
     /* 태블릿·큰 Fold 가로 화면 */
-    @media (min-width: 900px) {
+    @media (min-width: 900px) and (max-width: 1199px) {
       .page {
         width: min(100%, 900px);
         max-width: 900px;
@@ -826,6 +846,277 @@ export class AppHome extends LitElement {
         font-size: 28px;
       }
     }
+
+    /* 데스크톱 전용 */
+    @media (min-width: 1200px) {
+      .page {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+
+        --header-h: 82px;
+        --main-img-h: clamp(520px, 42vw, 760px);
+        --call-h: 78px;
+      }
+
+      .app-header {
+        height: var(--header-h);
+        padding: 0 clamp(32px, 5vw, 96px);
+      }
+
+      .menu-btn {
+        width: 52px;
+        height: 52px;
+        font-size: 38px;
+      }
+
+      .header-title {
+        margin-left: 20px;
+        font-size: 30px;
+      }
+
+      .main-img {
+        height: var(--main-img-h);
+      }
+
+      .main-img img.main-img-bg {
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .social-links {
+        left: clamp(32px, 5vw, 96px);
+        bottom: 28px;
+        gap: 16px;
+      }
+
+      .social-links a {
+        width: 48px;
+        height: 48px;
+      }
+
+      .service {
+        width: 100%;
+        padding: 40px clamp(40px, 6vw, 120px) 48px;
+        gap: 28px;
+      }
+
+      .section-title {
+        font-size: 30px;
+      }
+
+      .section-title::before {
+        width: 6px;
+        height: 30px;
+      }
+
+      .grid-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      .grid {
+        width: 100%;
+        max-width: 1500px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 28px;
+      }
+
+      .card {
+        aspect-ratio: 340 / 140;
+        border-radius: 14px;
+      }
+
+      .call {
+        width: 100%;
+        max-width: 1500px;
+        margin: 8px auto 0;
+      }
+
+      .call-banner {
+        height: 78px;
+        padding: 0 32px;
+        border-radius: 12px;
+      }
+
+      .call-text {
+        font-size: 30px;
+      }
+
+      .phone-circle {
+        width: 46px;
+        height: 46px;
+        font-size: 24px;
+      }
+
+      .arrow {
+        font-size: 40px;
+      }
+
+      .screen2 {
+        width: 100%;
+        min-height: 0;
+        height: clamp(650px, 56vw, 900px);
+        aspect-ratio: auto;
+      }
+
+      .screen2-bg {
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .top-search {
+        top: 38px;
+        right: clamp(40px, 6vw, 120px);
+      }
+
+      .naver {
+        font-size: 20px;
+      }
+
+      .search-box {
+        width: 160px;
+        font-size: 16px;
+      }
+
+      .top-search button {
+        font-size: 16px;
+        padding: 8px 14px;
+      }
+
+      .screen2-text {
+        left: clamp(60px, 8vw, 160px);
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .screen2-text h1 {
+        font-size: clamp(64px, 6vw, 108px);
+      }
+
+      .screen2-line {
+        width: 260px;
+        margin: 38px 0;
+      }
+
+      .screen2-text h2 {
+        font-size: clamp(48px, 4vw, 76px);
+      }
+
+      .screen3-page,
+      .contact-page {
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 48px clamp(40px, 6vw, 100px);
+      }
+
+      .screen3-page {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          'down up'
+          'down map';
+
+        grid-template-rows: auto 1fr;
+
+        gap: 28px;
+
+        align-items: start;
+      }
+
+      .desktop-map {
+        grid-area: map;
+        overflow: hidden;
+        display: flex;
+      }
+
+      .screen3-img-box-down {
+        grid-area: down;
+
+        display: flex;
+        align-self: start;
+      }
+
+      .screen3-img-box-up {
+        grid-area: up;
+        overflow: hidden;
+      }
+
+      .map-box-up {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        margin: 0;
+      }
+
+      .screen3-img-box-down img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: contain;
+      }
+
+      .screen3-img-box-up img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #2f302d;
+      }
+
+      .desktop-map img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        display: block;
+      }
+
+      .mobile-map {
+        display: none;
+      }
+
+      .desktop-map {
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .contact-page {
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 48px clamp(40px, 6vw, 100px);
+
+        display: flex;
+        flex-direction: column;
+      }
+
+      .contact-title {
+        margin-bottom: 20px;
+      }
+
+      .map-box-down {
+        margin-bottom: 30px;
+      }
+
+      .contact-box {
+        grid-area: info;
+        align-self: start;
+        padding: 24px 28px;
+      }
+
+      .label {
+        font-size: 18px;
+      }
+
+      .number {
+        font-size: 32px;
+      }
+
+      .contact-address {
+        font-size: 16px;
+      }
+    }
   `;
 
   private callPhone() {
@@ -841,12 +1132,18 @@ export class AppHome extends LitElement {
     window.addEventListener('scroll', this.handleWindowScroll, {
       passive: true,
     });
-    window.addEventListener('pwa-install-dialog-closed', this.handleInstallDialogClosed);
+    window.addEventListener(
+      'pwa-install-dialog-closed',
+      this.handleInstallDialogClosed
+    );
   }
 
   disconnectedCallback() {
     window.removeEventListener('scroll', this.handleWindowScroll);
-    window.removeEventListener('pwa-install-dialog-closed', this.handleInstallDialogClosed);
+    window.removeEventListener(
+      'pwa-install-dialog-closed',
+      this.handleInstallDialogClosed
+    );
     super.disconnectedCallback();
   }
 
@@ -987,19 +1284,26 @@ export class AppHome extends LitElement {
 
         <section class="screen screen3">
           <div class="screen3-page">
+            <div class="screen3-img-box-down">
+              <img src="./images/3-2.png" alt="보유 차량 리스트" />
+            </div>
+
             <div class="screen3-img-box-up">
               <img src="./images/3-1.jpg" alt="해안도로를 향해" />
             </div>
 
-            <div class="screen3-img-box-down">
-              <img src="./images/3-2.png" alt="보유 차량 리스트" />
+            <div class="map-box-up desktop-map">
+              <img
+                src="./images/map_top_big.png"
+                alt="More than a rental. A refined experience."
+              />
             </div>
           </div>
         </section>
 
         <section class="screen contact-screen">
           <div class="contact-page">
-            <div class="map-box-up">
+            <div class="map-box-up mobile-map">
               <img
                 src="./images/map_top_big.png"
                 alt="More than a rental. A refined experience."
