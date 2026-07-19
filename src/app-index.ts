@@ -246,7 +246,7 @@ export class AppIndex extends LitElement {
             >
               <div>
                 <strong>MJ Rental 앱을 설치할까요?</strong>
-                <span>모정렌터카 앱을 설치하면 더 빠르게 사용할 수 있어요.</span>
+                <span>모정렌터카 앱을 설치하면 오프라인에서 더 빠르게 사용할 수 있어요.</span>
               </div>
               <div class="install-actions">
                 <button class="close-btn" @click=${this.dismissInstallDialog}>닫기</button>

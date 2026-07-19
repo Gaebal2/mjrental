@@ -37,6 +37,17 @@
       onload="document.documentElement.classList.add('sl-theme-dark')"
     />
 
+    <script>
+      (function () {
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.includes('kakaotalk')) {
+          location.href =
+            'kakaotalk://web/openExternal?url=' +
+            encodeURIComponent(location.href);
+        }
+      })();
+    </script>
+
     <script type="module">
       import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path.js';
       setBasePath(
