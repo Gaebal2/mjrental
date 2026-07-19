@@ -9,12 +9,15 @@ import { router } from './router';
 
 const updateSW = registerSW({
   immediate: true,
+
   onNeedRefresh() {
     console.log('새 버전이 감지되어 앱을 자동으로 갱신합니다.');
+
     window.setTimeout(() => {
-      updateSW(true);
+      void updateSW(true);
     }, 300);
   },
+
   onOfflineReady() {
     console.log('MJ Rental 앱을 오프라인에서도 사용할 수 있습니다.');
   },
@@ -99,6 +102,95 @@ export class AppIndex extends LitElement {
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
+    .ios-guide {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+
+      z-index: 1001;
+
+      width: min(300px, calc(100vw - 40px));
+      padding: 20px;
+
+      box-sizing: border-box;
+      border-radius: 16px;
+
+      background: rgba(20, 20, 20, 0.97);
+      border: 1px solid rgba(215, 168, 63, 0.5);
+
+      color: white;
+
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+    }
+
+    .ios-guide-title {
+      margin: 0 0 12px;
+
+      color: #f2c45f;
+      font-size: 18px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .ios-guide-text {
+      color: #e2e2e2;
+      font-size: 14px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .ios-guide-steps {
+      margin: 16px 0;
+
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ios-guide-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      padding: 10px 12px;
+
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.06);
+
+      font-size: 14px;
+    }
+
+    .ios-guide-number {
+      width: 26px;
+      height: 26px;
+
+      flex-shrink: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background: #d7a83f;
+      color: #111;
+
+      font-weight: 900;
+    }
+
+    .ios-close-btn {
+      width: 100%;
+
+      margin-top: 4px;
+      padding: 10px;
+
+      background: linear-gradient(90deg, #b88422, #e4ba5c, #c99334);
+
+      color: #111;
+      font-weight: 900;
+    }
+
     @media (max-width: 600px) {
       .install-actions {
         width: 100%;
@@ -112,16 +204,78 @@ export class AppIndex extends LitElement {
 
   private deferredPrompt: any = null;
   private showInstallDialog = false;
+
+  // Safari 전용 설치 안내창
+  private showIosInstallGuide = false;
+
   private updateCheckTimer: number | null = null;
+
+  private isIosDevice() {
+    return (
+      /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+    );
+  }
+
+  private isSafariBrowser() {
+    const userAgent = navigator.userAgent.toLowerCase();
+
+    return (
+      userAgent.includes('safari') &&
+      !userAgent.includes('crios') &&
+      !userAgent.includes('fxios') &&
+      !userAgent.includes('edgios')
+    );
+  }
+
+  private isStandaloneMode() {
+    const iosStandalone =
+      'standalone' in navigator &&
+      (navigator as Navigator & { standalone?: boolean }).standalone === true;
+
+    const displayModeStandalone = window.matchMedia(
+      '(display-mode: standalone)'
+    ).matches;
+
+    return iosStandalone || displayModeStandalone;
+  }
 
   connectedCallback() {
     super.connectedCallback();
-    window.addEventListener('beforeinstallprompt', this.handleBeforeInstallPrompt);
+
+    window.addEventListener(
+      'beforeinstallprompt',
+      this.handleBeforeInstallPrompt
+    );
+
     window.addEventListener('appinstalled', this.handleAppInstalled);
-    window.addEventListener('pwa-update-available', this.handlePwaUpdateAvailable);
+
+    window.addEventListener(
+      'pwa-update-available',
+      this.handlePwaUpdateAvailable
+    );
+
     window.addEventListener('focus', this.handleWindowFocus);
+
     window.addEventListener('online', this.handleWindowFocus);
+
     document.addEventListener('visibilitychange', this.handleVisibilityChange);
+
+    // iPhone/iPad Safari는 beforeinstallprompt가 발생하지 않으므로
+    // 직접 설치 방법 안내창을 표시한다.
+    window.setTimeout(() => {
+      const dismissed = localStorage.getItem('mjrental-ios-guide-dismissed');
+
+      if (
+        this.isIosDevice() &&
+        this.isSafariBrowser() &&
+        !this.isStandaloneMode() &&
+        dismissed !== 'true'
+      ) {
+        this.showIosInstallGuide = true;
+        this.requestUpdate();
+      }
+    }, 1200);
 
     window.setTimeout(() => {
       this.checkForUpdates();
@@ -131,14 +285,31 @@ export class AppIndex extends LitElement {
   }
 
   disconnectedCallback() {
-    window.removeEventListener('beforeinstallprompt', this.handleBeforeInstallPrompt);
+    window.removeEventListener(
+      'beforeinstallprompt',
+      this.handleBeforeInstallPrompt
+    );
     window.removeEventListener('appinstalled', this.handleAppInstalled);
-    window.removeEventListener('pwa-update-available', this.handlePwaUpdateAvailable);
+    window.removeEventListener(
+      'pwa-update-available',
+      this.handlePwaUpdateAvailable
+    );
     window.removeEventListener('focus', this.handleWindowFocus);
     window.removeEventListener('online', this.handleWindowFocus);
-    document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    document.removeEventListener(
+      'visibilitychange',
+      this.handleVisibilityChange
+    );
     this.stopUpdatePolling();
     super.disconnectedCallback();
+  }
+
+  private dismissIosInstallGuide() {
+    this.showIosInstallGuide = false;
+
+    localStorage.setItem('mjrental-ios-guide-dismissed', 'true');
+
+    this.requestUpdate();
   }
 
   firstUpdated() {
@@ -152,6 +323,7 @@ export class AppIndex extends LitElement {
   }
 
   private handleBeforeInstallPrompt = (event: Event) => {
+    if (this.isIosDevice()) return;
     event.preventDefault();
     this.deferredPrompt = event;
     this.showInstallDialog = true;
@@ -185,7 +357,7 @@ export class AppIndex extends LitElement {
       if (!document.hidden) {
         this.checkForUpdates();
       }
-    }, 15000);
+    }, 60000);
   }
 
   private stopUpdatePolling() {
@@ -215,6 +387,7 @@ export class AppIndex extends LitElement {
 
     this.deferredPrompt = null;
     this.showInstallDialog = false;
+
     this.announceInstallDialogClosed();
     this.requestUpdate();
   }
@@ -235,7 +408,9 @@ export class AppIndex extends LitElement {
 
   render() {
     return html`
-      ${this.showInstallDialog ? html`<div class="install-backdrop"></div>` : ''}
+      ${this.showInstallDialog
+        ? html`<div class="install-backdrop"></div>`
+        : ''}
       ${this.showInstallDialog
         ? html`
             <div
@@ -246,12 +421,64 @@ export class AppIndex extends LitElement {
             >
               <div>
                 <strong>MJ Rental 앱을 설치할까요?</strong>
-                <span>모정렌터카 앱을 설치하면 오프라인에서 더 빠르게 사용할 수 있어요.</span>
+                <span
+                  >모정렌터카 앱을 설치하면 오프라인에서 더 빠르게 사용할 수
+                  있어요.</span
+                >
               </div>
               <div class="install-actions">
-                <button class="close-btn" @click=${this.dismissInstallDialog}>닫기</button>
-                <button class="install-btn" @click=${this.installApp}>설치</button>
+                <button class="close-btn" @click=${this.dismissInstallDialog}>
+                  닫기
+                </button>
+                <button class="install-btn" @click=${this.installApp}>
+                  설치
+                </button>
               </div>
+            </div>
+          `
+        : ''}
+      ${this.showIosInstallGuide
+        ? html`
+            <div
+              class="install-backdrop"
+              @click=${this.dismissIosInstallGuide}
+            ></div>
+
+            <div
+              class="ios-guide"
+              role="dialog"
+              aria-label="iPhone 앱 설치 안내"
+            >
+              <h2 class="ios-guide-title">MJ Rental 앱 설치하기</h2>
+
+              <div class="ios-guide-text">
+                Safari에서는 설치창이 자동으로 표시되지 않습니다. 아래 방법으로
+                홈 화면에 추가해 주세요.
+              </div>
+
+              <div class="ios-guide-steps">
+                <div class="ios-guide-step">
+                  <span class="ios-guide-number">1</span>
+                  <span>Safari 하단의 공유 버튼을 누르세요.</span>
+                </div>
+
+                <div class="ios-guide-step">
+                  <span class="ios-guide-number">2</span>
+                  <span>메뉴에서 ‘홈 화면에 추가’를 선택하세요.</span>
+                </div>
+
+                <div class="ios-guide-step">
+                  <span class="ios-guide-number">3</span>
+                  <span>오른쪽 위의 ‘추가’를 누르세요.</span>
+                </div>
+              </div>
+
+              <button
+                class="ios-close-btn"
+                @click=${this.dismissIosInstallGuide}
+              >
+                확인
+              </button>
             </div>
           `
         : ''}
