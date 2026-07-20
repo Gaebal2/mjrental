@@ -1103,7 +1103,7 @@ export class AppHome extends LitElement {
       }
 
       .contact-title {
-        margin-bottom: 20px;
+        margin-bottom: 30px;
       }
 
       .map-box-down {
