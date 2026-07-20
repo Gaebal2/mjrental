@@ -6,6 +6,8 @@ export class AppHome extends LitElement {
   @state()
   private showScrollGuide = false;
 
+  private screen3ResizeObserver?: ResizeObserver;
+
   static styles = css`
     :host {
       display: block;
@@ -422,6 +424,7 @@ export class AppHome extends LitElement {
     }
 
     .contact-screen {
+      margin-top: -2px;
       width: 100%;
       height: auto;
       background: #2f302d;
@@ -881,7 +884,7 @@ export class AppHome extends LitElement {
 
       .main-img img.main-img-bg {
         object-fit: cover;
-        object-position: center;
+        object-position: center -200px;
       }
 
       .social-links {
@@ -956,6 +959,8 @@ export class AppHome extends LitElement {
 
       .screen2 {
         width: 100%;
+        max-width: 1500px;
+        margin: 0 auto;
         min-height: 0;
         height: clamp(650px, 56vw, 900px);
         aspect-ratio: auto;
@@ -968,7 +973,7 @@ export class AppHome extends LitElement {
 
       .top-search {
         top: 38px;
-        right: clamp(40px, 6vw, 120px);
+        right: clamp(40px, 3vw, 120px);
       }
 
       .naver {
@@ -1014,22 +1019,30 @@ export class AppHome extends LitElement {
       .screen3-page {
         display: grid;
 
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
         grid-template-areas:
           'down up'
           'down map';
 
-        grid-template-rows: auto 1fr;
+        grid-template-rows: auto auto;
 
-        gap: 28px;
+        column-gap: 28px;
+        row-gap: 28px;
 
         align-items: start;
       }
 
       .desktop-map {
         grid-area: map;
+
+        width: 100%;
+        min-height: 0;
+
         overflow: hidden;
         display: flex;
+
+        align-self: start;
       }
 
       .screen3-img-box-down {
@@ -1068,18 +1081,15 @@ export class AppHome extends LitElement {
       .desktop-map img {
         width: 100%;
         height: 100%;
+
         object-fit: cover;
         object-position: center center;
+
         display: block;
       }
 
       .mobile-map {
         display: none;
-      }
-
-      .desktop-map {
-        height: 100%;
-        overflow: hidden;
       }
 
       .contact-page {
@@ -1119,6 +1129,71 @@ export class AppHome extends LitElement {
     }
   `;
 
+  protected firstUpdated() {
+    const downBox = this.renderRoot.querySelector<HTMLElement>(
+      '.screen3-img-box-down'
+    );
+
+    const upBox = this.renderRoot.querySelector<HTMLElement>(
+      '.screen3-img-box-up'
+    );
+
+    if (!downBox || !upBox) return;
+
+    this.screen3ResizeObserver = new ResizeObserver(() => {
+      this.syncDesktopScreen3Heights();
+    });
+
+    this.screen3ResizeObserver.observe(downBox);
+    this.screen3ResizeObserver.observe(upBox);
+
+    const images = this.renderRoot.querySelectorAll<HTMLImageElement>(
+      '.screen3-img-box-down img, .screen3-img-box-up img, .desktop-map img'
+    );
+
+    images.forEach((image) => {
+      if (!image.complete) {
+        image.addEventListener('load', this.syncDesktopScreen3Heights, {
+          once: true,
+        });
+      }
+    });
+
+    requestAnimationFrame(this.syncDesktopScreen3Heights);
+  }
+
+  private syncDesktopScreen3Heights = () => {
+    const desktopMap =
+      this.renderRoot.querySelector<HTMLElement>('.desktop-map');
+
+    if (!desktopMap) return;
+
+    // 모바일·태블릿에서는 강제 높이 해제
+    if (window.innerWidth < 1200) {
+      desktopMap.style.removeProperty('height');
+      return;
+    }
+
+    const downBox = this.renderRoot.querySelector<HTMLElement>(
+      '.screen3-img-box-down'
+    );
+
+    const upBox = this.renderRoot.querySelector<HTMLElement>(
+      '.screen3-img-box-up'
+    );
+
+    if (!downBox || !upBox) return;
+
+    const gap = 28;
+
+    const downHeight = downBox.getBoundingClientRect().height;
+    const upHeight = upBox.getBoundingClientRect().height;
+
+    const mapHeight = Math.max(0, downHeight - upHeight - gap);
+
+    desktopMap.style.height = `${mapHeight}px`;
+  };
+
   private callPhone() {
     window.location.href = 'tel:01085023647';
   }
@@ -1129,9 +1204,15 @@ export class AppHome extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+
     window.addEventListener('scroll', this.handleWindowScroll, {
       passive: true,
     });
+
+    window.addEventListener('resize', this.syncDesktopScreen3Heights, {
+      passive: true,
+    });
+
     window.addEventListener(
       'pwa-install-dialog-closed',
       this.handleInstallDialogClosed
@@ -1140,10 +1221,16 @@ export class AppHome extends LitElement {
 
   disconnectedCallback() {
     window.removeEventListener('scroll', this.handleWindowScroll);
+
+    window.removeEventListener('resize', this.syncDesktopScreen3Heights);
+
     window.removeEventListener(
       'pwa-install-dialog-closed',
       this.handleInstallDialogClosed
     );
+
+    this.screen3ResizeObserver?.disconnect();
+
     super.disconnectedCallback();
   }
 
@@ -1169,11 +1256,17 @@ export class AppHome extends LitElement {
           </header>
 
           <section class="main-img">
-            <img
-              class="main-img-bg"
-              src="./images/Mainpage_image.png"
-              alt="MJ Rental main"
-            />
+            <picture>
+              <source
+                media="(min-width: 1200px)"
+                srcset="./images/Mainpage_image_desktop_2.png"
+              />
+              <img
+                class="main-img-bg"
+                src="./images/Mainpage_image.png"
+                alt="MJ Rental main"
+              />
+            </picture>
 
             <div class="social-links">
               <a
@@ -1259,11 +1352,17 @@ export class AppHome extends LitElement {
         </section>
 
         <section class="screen screen2">
-          <img
-            class="screen2-bg"
-            src="./images/2-2.PNG"
-            alt="모정렌터카 시그니처 렌트카"
-          />
+          <picture>
+            <source
+              media="(min-width: 1200px)"
+              srcset="./images/2-2_desktop.jpg"
+            />
+            <img
+              class="screen2-bg"
+              src="./images/2-2.jpg"
+              alt="모정렌터카 시그니처 렌트카"
+            />
+          </picture>
 
           <div class="top-search">
             <span class="naver">NAVER</span>
@@ -1350,3 +1449,4 @@ export class AppHome extends LitElement {
     `;
   }
 }
+
