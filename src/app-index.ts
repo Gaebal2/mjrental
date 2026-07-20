@@ -420,18 +420,19 @@ export class AppIndex extends LitElement {
               style="width: 250px; min-width: 250px; max-width: 250px;"
             >
               <div>
-                <strong>MJ Rental 앱을 설치할까요?</strong>
-                <span
-                  >모정렌터카 앱을 설치하면 오프라인에서 더 빠르게 사용할 수
-                  있어요.</span
-                >
+                <strong>모정렌터카 앱을 설치해 보세요.</strong>
+                <span>
+                  오프라인에서 앱을 사용할 수 있어요. 설치하려면 "설치화면"에서 "설치"버튼을 눌러주세요.
+                </span>
               </div>
+
               <div class="install-actions">
                 <button class="close-btn" @click=${this.dismissInstallDialog}>
-                  닫기
+                  나중에
                 </button>
+
                 <button class="install-btn" @click=${this.installApp}>
-                  설치
+                  설치화면
                 </button>
               </div>
             </div>
@@ -486,3 +487,4 @@ export class AppIndex extends LitElement {
     `;
   }
 }
+

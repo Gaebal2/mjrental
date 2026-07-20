@@ -1014,7 +1014,7 @@ export class AppHome extends LitElement {
       .contact-page {
         max-width: 1500px;
         margin: 0 auto;
-        padding: 48px clamp(40px, 6vw, 100px);
+        padding: 20px clamp(40px, 6vw, 100px);
       }
 
       .screen3-page {
@@ -1096,7 +1096,7 @@ export class AppHome extends LitElement {
       .contact-page {
         max-width: 1500px;
         margin: 0 auto;
-        padding: 48px clamp(40px, 6vw, 100px);
+        padding: 20px clamp(40px, 6vw, 100px);
 
         display: flex;
         flex-direction: column;
