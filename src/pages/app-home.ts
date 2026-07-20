@@ -974,6 +974,7 @@ export class AppHome extends LitElement {
       .top-search {
         top: 38px;
         right: clamp(40px, 3vw, 120px);
+        transform: translate(30px, -20px);
       }
 
       .naver {
