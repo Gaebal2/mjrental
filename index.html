@@ -1,72 +1,76 @@
 <!doctype html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <title>MJ Rental</title>
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1JEX159G2L"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-    <meta name="description" content="모정렌터카 공식 웹앱" />
-    <meta name="theme-color" content="#181818" />
+    gtag('config', 'G-1JEX159G2L');
+  </script>
 
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="MJ Rental" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="모정렌터카" />
-    <meta property="og:description" content="모든 여정이 특별해지는 순간" />
-    <meta property="og:image" content="./images/Mainpage_image.png" />
+  <meta charset="utf-8" />
+  <title>MJ Rental</title>
 
-    <link rel="icon" href="./assets/icons/icon_192.png" type="image/png" />
-    <link rel="apple-touch-icon" href="./assets/icons/icon_192.png" />
-    <link rel="manifest" href="./manifest.json" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-    <link
-      rel="stylesheet"
-      media="(prefers-color-scheme:light)"
-      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/dist/themes/light.css"
-    />
-    <link
-      rel="stylesheet"
-      media="(prefers-color-scheme:dark)"
-      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/dist/themes/dark.css"
-      onload="document.documentElement.classList.add('sl-theme-dark')"
-    />
+  <meta name="description" content="모정렌터카 공식 웹앱" />
+  <meta name="theme-color" content="#181818" />
 
-    <script>
-      (function () {
-        var ua = navigator.userAgent.toLowerCase();
-        if (ua.includes('kakaotalk')) {
-          location.href =
-            'kakaotalk://web/openExternal?url=' +
-            encodeURIComponent(location.href);
-        }
-      })();
-    </script>
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="MJ Rental" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
-    <script type="module">
-      import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path.js';
-      setBasePath(
-        'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/'
-      );
-    </script>
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="모정렌터카" />
+  <meta property="og:description" content="모든 여정이 특별해지는 순간" />
+  <meta property="og:image" content="./images/Mainpage_image.png" />
 
-    <script type="module" src="/src/app-index.ts"></script>
-  </head>
+  <link rel="icon" href="./assets/icons/icon_192.png" type="image/png" />
+  <link rel="apple-touch-icon" href="./assets/icons/icon_192.png" />
+  <link rel="manifest" href="./manifest.json" />
 
-  <body>
-    <app-index></app-index>
+  <link rel="stylesheet" media="(prefers-color-scheme:light)"
+    href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/dist/themes/light.css" />
+  <link rel="stylesheet" media="(prefers-color-scheme:dark)"
+    href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/dist/themes/dark.css"
+    onload="document.documentElement.classList.add('sl-theme-dark')" />
 
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js');
-        });
+  <script>
+    (function () {
+      var ua = navigator.userAgent.toLowerCase();
+      if (ua.includes('kakaotalk')) {
+        location.href =
+          'kakaotalk://web/openExternal?url=' +
+          encodeURIComponent(location.href);
       }
-    </script>
-  </body>
+    })();
+  </script>
+
+  <script type="module">
+    import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path.js';
+    setBasePath(
+      'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/'
+    );
+  </script>
+
+  <script type="module" src="/src/app-index.ts"></script>
+</head>
+
+<body>
+  <app-index></app-index>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js');
+      });
+    }
+  </script>
+</body>
+
 </html>
